@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Perfume Heaven</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1B4332;
+            --secondary-color: #2d3748;
+            --accent-color: #FF7B00;
+            --success-color: #2a9d8f;
+            --pending-color: #fca311;
+            --danger-color: #e74c3c;
+            --confirmed-color: #3498db; 
+            --background-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e9ecef;
+            --font-family-bn: 'Hind Siliguri', sans-serif;
+            --font-family-en: 'Poppins', sans-serif;
+            --shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+        body {
+            font-family: var(--font-family-bn), var(--font-family-en);
+            background-color: var(--background-color); margin: 0;
+            color: var(--secondary-color);
+        }
+        .page-wrapper { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
+
+        /* Modern Header */
+        .page-header {
+            background-color: var(--card-bg);
+            padding: 20px 30px; border-radius: 12px;
+            box-shadow: var(--shadow); margin-bottom: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .page-header h1 {
+            color: var(--primary-color); font-size: 1.8rem; margin: 0;
+            font-family: var(--font-family-en);
+        }
+        .page-header .back-link {
+            text-decoration: none; background-color: var(--border-color);
+            color: var(--secondary-color); font-weight: 600;
+            padding: 8px 16px; border-radius: 8px; transition: all 0.3s;
+        }
+        .page-header .back-link:hover { background-color: #d8dee2; }
+
+        /* Accordion Order Card */
+        .order-card-accordion {
+            background-color: var(--card-bg);
+            border-radius: 12px; margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        .order-summary-header {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 15px; align-items: center;
+            padding: 20px; cursor: pointer;
+        }
+        @media (min-width: 768px) { .order-summary-header { grid-template-columns: 1fr 1fr 1fr auto; } }
+        
+        .summary-item { font-size: 0.95rem; }
+        .summary-item strong {
+            display: block; color: #6c757d;
+            font-size: 0.85rem; font-weight: 500; margin-bottom: 2px;
+        }
+        .order-status {
+            padding: 6px 14px; border-radius: 50px;
+            font-weight: 600; text-align: center; color: white;
+            font-size: 0.8rem;
+            /* স্ট্যাটাস লেখার জন্য ইংরেজি ফন্ট ব্যবহার করা হচ্ছে */
+            font-family: var(--font-family-en);
+        }
+        .status-pending { background-color: var(--pending-color); }
+        .status-shipped { background-color: var(--success-color); }
+        .status-delivered { background-color: var(--primary-color); }
+        .status-cancelled { background-color: var(--danger-color); }
+        .status-confirmed { background-color: var(--confirmed-color); }
+
+        .details-toggle-icon {
+            width: 24px; height: 24px;
+            transition: transform 0.4s ease;
+            justify-self: end;
+        }
+        .order-card-accordion.open .details-toggle-icon { transform: rotate(180deg); }
+
+        /* Collapsible Details Panel */
+        .order-details-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            border-top: 1px solid transparent;
+        }
+        .order-card-accordion.open .order-details-panel { border-top-color: var(--border-color); }
+        .order-details-content { padding: 20px; }
+        
+        .details-grid {
+            display: grid; grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        @media (min-width: 768px) { .details-grid { grid-template-columns: 1fr 1fr; } }
+        .details-section h3 {
+            font-size: 1.2rem; margin-top: 0; margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px; display: inline-block;
+        }
+
+        /* Product List in Details */
+        .product-list-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .product-list-item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .product-list-item-info p { margin: 0; line-height: 1.4; }
+        .product-list-item-info .title { font-weight: 600; }
+        .product-list-item-info .variant { font-size: 0.9rem; color: #6c757d; }
+
+        /* Info List (Shipping, Payment) */
+        .info-list p { display: flex; justify-content: space-between; margin: 8px 0; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; }
+        .info-list p span:first-child { font-weight: 500; color: #6c757d; }
+        .info-list p span:last-child { font-weight: 600; text-align: right; }
+        
+        #loading, #no-orders { text-align: center; padding: 60px; font-size: 1.2rem; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="page-header">
+            <h1>My Orders</h1>
+            <a href="index.html" class="back-link">হোমপেজ</a>
+        </div>
+        <div id="orders-list">
+            <p id="loading">অর্ডার লোড হচ্ছে...</p>
+            <p id="no-orders" style="display:none;">আপনি এখনও কোনো অর্ডার করেননি।</p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, query, orderByChild, equalTo, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAb8YsPMOY53GxiycCL6G0MPZdgWe3nnyY",
+            authDomain: "movie-92659.firebaseapp.com",
+            databaseURL: "https://movie-92659-default-rtdb.firebaseio.com",
+            projectId: "movie-92659",
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        const ordersListContainer = document.getElementById('orders-list');
+        const loadingEl = document.getElementById('loading');
+        const noOrdersEl = document.getElementById('no-orders');
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                fetchUserOrders(user.uid);
+            } else {
+                window.location.href = 'account.html';
+            }
+        });
+
+        function fetchUserOrders(userId) {
+            const ordersRef = ref(db, 'orders');
+            const userOrdersQuery = query(ordersRef, orderByChild('userId'), equalTo(userId));
+
+            onValue(userOrdersQuery, (snapshot) => {
+                loadingEl.style.display = 'none';
+                ordersListContainer.innerHTML = ''; 
+                
+                if (snapshot.exists()) {
+                    const orders = snapshot.val();
+                    const sortedOrderIds = Object.keys(orders).sort((a,b) => new Date(orders[b].orderDate) - new Date(orders[a].orderDate));
+                    sortedOrderIds.forEach(orderId => {
+                        const order = orders[orderId];
+                        ordersListContainer.appendChild(createOrderCard(orderId, order));
+                    });
+                } else {
+                    noOrdersEl.style.display = 'block';
+                }
+            });
+        }
+
+        // === জাভাস্ক্রিপ্ট ফাংশনটি আপডেট করা হয়েছে ===
+        function createOrderCard(orderId, order) {
+            const card = document.createElement('div');
+            card.className = 'order-card-accordion';
+            
+            // স্ট্যাটাস লজিক উন্নত করা হয়েছে
+            let displayStatus = 'Pending';
+            let statusClass = 'status-pending';
+            const rawStatus = (order.status || 'Pending').toLowerCase().trim(); // ডেটাবেস থেকে স্ট্যাটাস নেওয়া
+
+            // Capitalize the first letter for a clean display
+            const capitalize = (s) => s && s.charAt(0).toUpperCase() + s.slice(1) || "";
+
+            switch (rawStatus) {
+                case 'pending':
+                    displayStatus = 'Pending'; // ইংরেজিতে পরিবর্তন করা হয়েছে
+                    statusClass = 'status-pending';
+                    break;
+                case 'confirmed':
+                    displayStatus = 'Confirmed'; // ইংরেজিতে পরিবর্তন করা হয়েছে
+                    statusClass = 'status-confirmed';
+                    break;
+                case 'shipped':
+                    displayStatus = 'Shipped'; // ইংরেজিতে পরিবর্তন করা হয়েছে
+                    statusClass = 'status-shipped';
+                    break;
+                case 'delivered':
+                    displayStatus = 'Delivered'; // ইংরেজিতে পরিবর্তন করা হয়েছে
+                    statusClass = 'status-delivered';
+                    break;
+                case 'cancelled':
+                case 'canceled':
+                case 'cancel':
+                    displayStatus = 'Cancelled'; // ইংরেজিতে পরিবর্তন করা হয়েছে
+                    statusClass = 'status-cancelled';
+                    break;
+                default:
+                    // যদি কোনো অপরিচিত স্ট্যাটাস আসে, সেটিও ইংরেজিতে দেখাবে
+                    displayStatus = capitalize(order.status); 
+                    statusClass = 'status-pending';
+                    break;
+            }
+
+            const productsHtml = order.items.map(item => `
+                <div class="product-list-item">
+                    <img src="${item.imageUrl}" alt="${item.title}">
+                    <div class="product-list-item-info">
+                        <p class="title">${item.title}</p>
+                        <p class="variant">${item.variant.name} × ${item.quantity}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            card.innerHTML = `
+                <div class="order-summary-header">
+                    <div class="summary-item"><strong>অর্ডার আইডি</strong> #${orderId.slice(-6).toUpperCase()}</div>
+                    <div class="summary-item"><strong>তারিখ</strong> ${new Date(order.orderDate).toLocaleDateString('bn-BD')}</div>
+                    <div class="summary-item"><strong>মোট টাকা</strong> ৳ ${order.totalAmount.toFixed(2)}</div>
+                    <div class="summary-item" style="display:flex; justify-content: space-between; align-items: center;">
+                        <span class="order-status ${statusClass}">${displayStatus}</span>
+                        <svg class="details-toggle-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                    </div>
+                </div>
+                <div class="order-details-panel">
+                    <div class="order-details-content">
+                        <div class="details-grid">
+                            <div class="details-section">
+                                <h3>অর্ডারকৃত পণ্য</h3>
+                                ${productsHtml}
+                            </div>
+                            <div class="details-section">
+                                <h3>ডেলিভারি তথ্য</h3>
+                                <div class="info-list">
+                                    <p><span>নাম:</span> <span>${order.customerInfo.name}</span></p>
+                                    <p><span>ফোন:</span> <span>${order.customerInfo.phone}</span></p>
+                                    <p><span>ঠিকানা:</span> <span>${order.customerInfo.address}, ${order.customerInfo.division}</span></p>
+                                </div>
+                            </div>
+                            <div class="details-section" style="grid-column: 1 / -1;">
+                                <h3>পেমেন্ট তথ্য</h3>
+                                <div class="info-list">
+                                    <p><span>পেমেন্ট টাইপ:</span> <span>${order.paymentInfo.type === 'full' ? 'সম্পূর্ণ পেমেন্ট' : 'অ্যাডভান্স'}</span></p>
+                                    <p><span>পেমেন্ট মাধ্যম:</span> <span>${order.paymentInfo.method}</span></p>
+                                    <p><span>TrxID:</span> <span>${order.paymentInfo.transactionId}</span></p>
+                                    <p><span>মোট পরিশোধিত:</span> <span>৳ ${order.paymentInfo.amountPaid.toFixed(2)}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Accordion toggle logic
+            const header = card.querySelector('.order-summary-header');
+            header.addEventListener('click', () => {
+                const panel = card.querySelector('.order-details-panel');
+                card.classList.toggle('open');
+                if (card.classList.contains('open')) {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } else {
+                    panel.style.maxHeight = null;
+                }
+            });
+
+            return card;
+        }
+    </script>
+</body>
+</html>

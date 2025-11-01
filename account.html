@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - Perfume Heaven</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1B4332; --secondary-color: #2d3748;
+            --background-color: #f4f7f9; --card-bg: #ffffff;
+            --border-color: #e9ecef; --font-family-bn: 'Hind Siliguri', sans-serif;
+            --font-family-en: 'Poppins', sans-serif;
+            --shadow-md: 0 6px 20px rgba(0,0,0,0.07);
+            --danger-color: #e74c3c;
+        }
+        body {
+            font-family: var(--font-family-bn), var(--font-family-en);
+            background: linear-gradient(135deg, #e0f2f1, #f5f5f5);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container-wrapper {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+        }
+        .form-container, #profile-view {
+            padding: 30px 40px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Tab Styles */
+        .tab-header {
+            display: flex;
+            background-color: #f8f9fa;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 18px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            position: relative;
+            transition: color 0.3s;
+        }
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 3px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        .tab-btn.active { color: var(--primary-color); }
+        .tab-btn.active::after { transform: scaleX(1); }
+
+        .form-content { display: none; }
+        .form-content.active { display: block; }
+        .form-header { text-align: center; margin: 25px 0; }
+        .form-header h2 { font-size: 1.8rem; margin: 0; color: var(--primary-color); }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+        .form-group input {
+            width: 100%; padding: 14px; border-radius: 8px;
+            border: 1px solid var(--border-color); font-size: 1rem;
+            box-sizing: border-box; transition: all 0.2s;
+        }
+        .form-group input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.1); }
+        .btn-submit {
+            width: 100%; padding: 15px; font-size: 1.1rem;
+            font-weight: 700; color: white; background-color: var(--primary-color);
+            border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s;
+        }
+        .btn-submit:hover { background-color: #153628; }
+        
+        /* Profile View Styles */
+        #profile-view { display: none; }
+        .profile-header { text-align: center; margin-bottom: 30px; }
+        .profile-avatar {
+            width: 100px; height: 100px;
+            border-radius: 50%; background-color: var(--primary-color);
+            color: white; font-size: 3rem; font-weight: 700;
+            display: inline-flex; align-items: center; justify-content: center;
+            margin-bottom: 15px;
+        }
+        .profile-name { font-size: 1.8rem; font-weight: 700; margin: 0; }
+        .profile-email { font-size: 1rem; color: var(--secondary-color); }
+        
+        .profile-actions {
+            display: grid; gap: 15px; margin-top: 30px;
+        }
+        .profile-btn {
+            display: flex; align-items: center; gap: 15px;
+            padding: 15px; border: 1px solid var(--border-color);
+            border-radius: 12px; text-decoration: none; color: var(--secondary-color);
+            font-weight: 600; transition: all 0.3s;
+        }
+        .profile-btn:hover { border-color: var(--primary-color); background-color: #f8f9fa; color: var(--primary-color); }
+        .profile-btn svg { width: 24px; height: 24px; }
+        
+        .btn-logout { background-color: var(--danger-color); color: white; border: none; }
+        .btn-logout:hover { background-color: #c0392b; color: white; }
+
+        .error-message {
+            color: var(--danger-color); text-align: center; font-weight: 500;
+            margin-top: 15px; padding: 10px; background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 8px; display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <!-- Auth Forms: Login/Register -->
+        <div id="auth-container">
+            <div class="tab-header">
+                <button class="tab-btn active" data-form="login">লগইন</button>
+                <button class="tab-btn" data-form="register">রেজিস্টার</button>
+            </div>
+            <div class="form-container">
+                <div id="login-form-content" class="form-content active">
+                    <div class="form-header"><h2>স্বাগতম!</h2></div>
+                    <form id="login-form">
+                        <div class="form-group"><label for="login-email">ইমেইল</label><input type="email" id="login-email" required></div>
+                        <div class="form-group"><label for="login-password">পাসওয়ার্ড</label><input type="password" id="login-password" required></div>
+                        <button type="submit" class="btn-submit">লগইন করুন</button>
+                        <p class="error-message" id="login-error"></p>
+                    </form>
+                </div>
+                <div id="register-form-content" class="form-content">
+                    <div class="form-header"><h2>অ্যাকাউন্ট তৈরি করুন</h2></div>
+                    <form id="register-form">
+                        <div class="form-group"><label for="reg-name">আপনার নাম</label><input type="text" id="reg-name" required></div>
+                        <div class="form-group"><label for="reg-phone">মোবাইল নম্বর</label><input type="tel" id="reg-phone" required></div>
+                        <div class="form-group"><label for="reg-email">ইমেইল</label><input type="email" id="reg-email" required></div>
+                        <div class="form-group"><label for="reg-password">পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label><input type="password" id="reg-password" required minlength="6"></div>
+                        <button type="submit" class="btn-submit">রেজিস্টার করুন</button>
+                        <p class="error-message" id="register-error"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile View (when logged in) -->
+        <div id="profile-view">
+             <div class="profile-header">
+                 <div id="profile-avatar" class="profile-avatar"></div>
+                 <h2 id="profile-name" class="profile-name"></h2>
+                 <p id="profile-email" class="profile-email"></p>
+             </div>
+             <div class="profile-actions">
+                 <a href="orders.html" class="profile-btn">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M9 10.5h.01M15 10.5h.01M9.75 15h4.5" /></svg>
+                     আমার অর্ডারসমূহ
+                 </a>
+                 <a href="#" class="profile-btn" id="edit-profile-btn">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" /></svg>
+                     প্রোফাইল এডিট করুন
+                 </a>
+                 <button id="logout-btn" class="profile-btn btn-logout">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" /></svg>
+                     লগ আউট
+                 </button>
+             </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAb8YsPMOY53GxiycCL6G0MPZdgWe3nnyY",
+            authDomain: "movie-92659.firebaseapp.com",
+            databaseURL: "https://movie-92659-default-rtdb.firebaseio.com",
+            projectId: "movie-92659",
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        const authContainer = document.getElementById('auth-container');
+        const profileViewContainer = document.getElementById('profile-view');
+        
+        // Tab switching logic
+        const tabs = document.querySelectorAll('.tab-btn');
+        const forms = document.querySelectorAll('.form-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                const formId = tab.dataset.form + '-form-content';
+                forms.forEach(form => {
+                    form.classList.remove('active');
+                    if(form.id === formId) {
+                        form.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Show error message helper
+        const showError = (elId, message) => {
+            const el = document.getElementById(elId);
+            el.textContent = message;
+            el.style.display = 'block';
+        };
+
+        // Hide all error messages
+        const hideErrors = () => {
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+        };
+
+        // Auth State Observer
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                // User is logged in, show profile
+                authContainer.style.display = 'none';
+                profileViewContainer.style.display = 'block';
+                
+                const displayName = user.displayName || "User";
+                document.getElementById('profile-avatar').textContent = displayName.charAt(0).toUpperCase();
+                document.getElementById('profile-name').textContent = displayName;
+                document.getElementById('profile-email').textContent = user.email;
+            } else {
+                // User is logged out, show auth forms
+                authContainer.style.display = 'block';
+                profileViewContainer.style.display = 'none';
+            }
+        });
+
+        // Registration
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideErrors();
+            const name = document.getElementById('reg-name').value;
+            const phone = document.getElementById('reg-phone').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                await updateProfile(user, { displayName: name });
+                await set(ref(db, `users/${user.uid}`), { name, email, phone });
+
+                alert('রেজিস্ট্রেশন সফল হয়েছে!');
+                // onAuthStateChanged will handle UI switch
+            } catch (error) {
+                showError('register-error', 'রেজিস্ট্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।');
+            }
+        });
+
+        // Login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideErrors();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                // onAuthStateChanged will handle UI switch
+            } catch (error) {
+                showError('login-error', "আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়।");
+            }
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                // onAuthStateChanged will handle UI switch
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+        
+        // Edit Profile Button (placeholder)
+        document.getElementById('edit-profile-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('এই ফিচারটি শীঘ্রই আসছে!');
+        });
+
+    </script>
+</body>
+</html>
