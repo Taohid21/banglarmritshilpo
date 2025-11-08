@@ -66,16 +66,17 @@
 <body>
 
 <div class="shaka-video-container youtube-theme" data-shaka-player-container>
-    <video autoplay muted playsinline id="video"></video>
+    <!-- "muted" attribute নেই, তাই ভিডিওটি শব্দসহ শুরু হবে -->
+    <video autoplay playsinline id="video"></video>
     <img id="myLogo" src="tiolive.png">
 </div>
 
 <script>
     async function initPlayer() {
-        // --- ভিডিওর সব তথ্য এখানে সরাসরি দিয়ে দেওয়া হয়েছে ---
-        const streamUrl = 'https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/dash/enc/wf8usag51e/out/v1/bd3b0c314fff4bb1ab4693358f3cd2d3/cenc.mpd';
-        const keyId = 'd0f2e5c39e70c18f29bf77768a1ad89a';
-        const key = 'd6853c51fcf37a18905f0609972395d7';
+        // --- নতুন ভিডিওর তথ্য এখানে আপডেট করা হয়েছে ---
+        const streamUrl = 'https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/dash/enc/lsdasbvglv/out/v1/bb548a3626cd4708afbb94a58d71dce9/cenc.mpd';
+        const keyId = 'a93c1cbfdccd23233bac13540c693e7f';
+        const key = '2f6ab2e6693eb847eff3c9da8f9d01fc';
         // ---------------------------------------------------
 
         shaka.polyfill.installAll();
@@ -89,13 +90,22 @@
         const player = new shaka.Player(video);
 
         const ui = new shaka.ui.Overlay(player, container, video);
+        
+        // কন্ট্রোল প্যানেল কনফিগারেশন
         ui.configure({
             'controlPanelElements': [
-                'play_pause', 'time_and_duration', 'mute', 'volume', 'spacer',
-                'captions', 'overflow_menu'
+                'play_pause', 
+                'time_and_duration', 
+                'mute', 
+                'volume', 
+                'spacer',
+                'captions', 
+                'language', // ভাষা বাটনটি বাইরে
+                'quality',  // সেটিংস (Quality) বাটনটি বাইরে
+                'overflow_menu'
             ],
             'overflowMenuButtons': [
-                'quality', 'language', 'picture_in_picture', 'fullscreen'
+                'fullscreen' // শুধু ফুলস্ক্রিন বাটনটি মেনুর ভেতরে
             ]
         });
 
