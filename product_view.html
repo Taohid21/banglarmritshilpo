@@ -10,11 +10,11 @@
 <style>
     :root {
         --primary-color: #0f172a;
-        --accent-color: #2563eb;
+        --accent-color: #e2136e; /* bKash / Payment Accent */
+        --nagad-color: #f7921e;
         --secondary-color: #64748b;
         --success-color: #10b981;
         --danger-color: #ef4444;
-        --warning-color: #f59e0b;
         --bg-color: #f8fafc;
         --card-bg: #ffffff;
         --border-color: #e2e8f0;
@@ -42,19 +42,19 @@
     .thumbnail-container { display: flex; gap: 10px; padding: 15px; overflow-x: auto; scrollbar-width: none; }
     .thumbnail-container::-webkit-scrollbar { display: none; }
     .thumbnail { width: 64px; height: 64px; border-radius: 8px; cursor: pointer; border: 2px solid var(--border-color); object-fit: cover; flex-shrink: 0; transition: border-color 0.2s; }
-    .thumbnail.active { border-color: var(--accent-color); }
+    .thumbnail.active { border-color: #0f172a; }
 
     /* Info Area */
     .product-info-area { padding: 20px; }
     .product-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; line-height: 1.3; }
     .badge-container { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-    .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+    .badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
     .badge-free { background: #d1fae5; color: #047857; }
     .badge-cod { background: #fef3c7; color: #b45309; }
 
     /* Price Box */
     .price-box { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; }
-    .current-price { font-size: 2rem; font-weight: 700; color: var(--accent-color); font-family: var(--font-family-en); }
+    .current-price { font-size: 2rem; font-weight: 700; color: #2563eb; font-family: var(--font-family-en); }
     .original-price { font-size: 1.2rem; color: var(--secondary-color); text-decoration: line-through; font-family: var(--font-family-en); }
     
     /* Variant & Quantity */
@@ -62,7 +62,7 @@
     .variant-options { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
     .variant-option input { display: none; }
     .variant-option label { padding: 8px 18px; border: 1.5px solid var(--border-color); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; display: inline-block; }
-    .variant-option input:checked + label { border-color: var(--accent-color); background-color: #eff6ff; color: var(--accent-color); }
+    .variant-option input:checked + label { border-color: #2563eb; background-color: #eff6ff; color: #2563eb; }
 
     .quantity-controls { display: inline-flex; align-items: center; border: 1.5px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 25px; }
     .quantity-btn { width: 40px; height: 40px; background: transparent; border: none; cursor: pointer; font-size: 20px; color: var(--primary-color); }
@@ -76,13 +76,13 @@
     @media (min-width: 768px) { .bottom-action-bar { left: 50%; transform: translateX(-50%); max-width: 768px; } }
     .action-btn { flex: 1; padding: 12px; font-size: 1rem; font-weight: 700; border-radius: 10px; border: none; cursor: pointer; transition: all 0.2s; }
     .action-btn.reviews { background: #f1f5f9; color: var(--primary-color); flex: 0.4; }
-    .action-btn.buy-now { background: var(--accent-color); color: white; }
+    .action-btn.buy-now { background: #2563eb; color: white; }
     .action-btn.buy-now:active { transform: scale(0.98); }
 
-    /* FULLSCREEN MODAL (DYNAMIC VIEWPORT FIXED - NO BUTTON OVERLAP) */
+    /* FULLSCREEN GATEWAY MODAL */
     .fullscreen-modal-overlay {
         position: fixed; top: 0; left: 0; width: 100%;
-        height: 100vh; height: 100dvh; /* dvh fixes mobile browser address bar covering buttons */
+        height: 100vh; height: 100dvh;
         background: #ffffff; z-index: 1000;
         transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex; flex-direction: column;
@@ -113,31 +113,49 @@
     .step { flex: 1; text-align: center; position: relative; z-index: 2; }
     .step-icon { width: 32px; height: 32px; border-radius: 50%; background: #f1f5f9; border: 2px solid var(--border-color); display: inline-flex; justify-content: center; align-items: center; font-weight: 600; font-size: 0.9rem; color: var(--secondary-color); }
     .step-label { font-size: 0.8rem; margin-top: 4px; color: var(--secondary-color); font-weight: 500; }
-    .step.active .step-icon { background: var(--accent-color); border-color: var(--accent-color); color: white; }
-    .step.active .step-label { color: var(--accent-color); font-weight: 700; }
+    .step.active .step-icon { background: #2563eb; border-color: #2563eb; color: white; }
+    .step.active .step-label { color: #2563eb; font-weight: 700; }
 
     .form-step { display: none; }
     .form-step.active { display: block; animation: fadeIn 0.2s; }
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
     .form-group input, .form-group select { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-size: 0.98rem; outline: none; font-family: inherit; }
-    .form-group input:focus { border-color: var(--accent-color); }
+    .form-group input:focus, .form-group select:focus { border-color: #2563eb; }
 
-    /* Payment Option Selector */
-    .payment-options-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-    .payment-card { border: 2px solid var(--border-color); border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.2s; }
-    .payment-card.active { border-color: var(--accent-color); background: #eff6ff; }
-    .payment-card input { display: none; }
-    .payment-card-title { font-weight: 700; font-size: 1rem; color: var(--primary-color); display: block; }
-    .payment-card-desc { font-size: 0.85rem; color: var(--secondary-color); margin-top: 2px; display: block; }
+    /* PROFESSIONAL PAYMENT GATEWAY UI */
+    .gateway-selector-title { font-size: 0.9rem; font-weight: 700; color: var(--secondary-color); text-transform: uppercase; margin-bottom: 10px; }
+    
+    .gateway-method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    .gateway-method-card {
+        border: 2px solid var(--border-color); border-radius: 10px; padding: 10px 5px;
+        text-align: center; cursor: pointer; transition: all 0.2s; background: #ffffff;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; height: 75px;
+    }
+    .gateway-method-card img { height: 32px; object-fit: contain; }
+    .gateway-method-card.active { border-color: #2563eb; background: #f0f7ff; box-shadow: 0 4px 12px rgba(37,99,235,0.12); }
+    .gateway-method-card.active.bkash { border-color: var(--accent-color); background: #fff0f6; }
+    .gateway-method-card.active.nagad { border-color: var(--nagad-color); background: #fff8f0; }
 
-    .payment-instructions { background: #f8fafc; border: 1px dashed var(--border-color); padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 15px; }
-    .payment-number-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; }
-    .payment-number-wrapper strong { font-size: 1.2rem; color: var(--accent-color); font-family: var(--font-family-en); }
-    .copy-btn { background: #e0f2fe; color: #0369a1; border: none; border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; font-weight: 600; }
+    .pay-type-container { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 10px; padding: 12px; margin-bottom: 15px; }
+    .pay-type-option { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; cursor: pointer; }
+    .pay-type-option:last-child { margin-bottom: 0; }
+    .pay-type-option input { width: 18px; height: 18px; }
 
-    .btn { display: inline-block; padding: 12px 20px; font-size: 1rem; font-weight: 600; text-align: center; cursor: pointer; border: none; border-radius: 8px; transition: all 0.2s; flex: 1; }
-    .btn-primary { background: var(--accent-color); color: white; }
+    .gateway-box {
+        border: 1.5px dashed var(--border-color); border-radius: 12px; padding: 16px;
+        background: #ffffff; text-align: center; margin-bottom: 20px;
+    }
+    .gateway-box-logo { height: 38px; margin-bottom: 8px; }
+    .gateway-number-box {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        background: #f1f5f9; padding: 10px; border-radius: 8px; margin: 10px 0;
+    }
+    .gateway-number-box strong { font-size: 1.3rem; letter-spacing: 1px; color: #0f172a; font-family: var(--font-family-en); }
+    .copy-btn { background: #e0f2fe; color: #0369a1; border: none; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-weight: 700; }
+
+    .btn { display: inline-block; padding: 12px 20px; font-size: 1rem; font-weight: 700; text-align: center; cursor: pointer; border: none; border-radius: 8px; transition: all 0.2s; flex: 1; }
+    .btn-primary { background: #2563eb; color: white; }
     .btn-secondary { background: #f1f5f9; color: var(--primary-color); }
     .btn-success { background: var(--success-color); color: white; }
 
@@ -145,7 +163,7 @@
     .summary-card { background: #f8fafc; padding: 15px; border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 15px; }
     .summary-card h5 { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
     .summary-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.9rem; }
-    .summary-row.total { border-top: 1.5px solid var(--border-color); padding-top: 8px; margin-top: 8px; font-weight: 700; font-size: 1.1rem; color: var(--accent-color); }
+    .summary-row.total { border-top: 1.5px solid var(--border-color); padding-top: 8px; margin-top: 8px; font-weight: 700; font-size: 1.1rem; color: #2563eb; }
 
     #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
     .toast { padding: 12px 20px; border-radius: 8px; color: white; background: var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-size: 0.9rem; margin-top: 8px; }
@@ -215,52 +233,81 @@
             </div>
 
             <form id="order-form" novalidate>
-                <!-- Step 1: Delivery Address -->
+                <!-- Step 1: Delivery Address with Districts -->
                 <div class="form-step active" id="step-1">
                     <div class="form-group"><label>আপনার নাম</label><input type="text" id="customer-name" required placeholder="সম্পূর্ণ নাম লিখুন"></div>
                     <div class="form-group"><label>মোবাইল নম্বর</label><input type="tel" id="customer-phone" required placeholder="01xxxxxxxxx"></div>
                     <div class="form-group"><label>সম্পূর্ণ ঠিকানা</label><input type="text" id="customer-address" required placeholder="বাসা/রোড নং, এলাকা"></div>
-                    <div class="form-group"><label>বিভাগ</label><select id="customer-division" required><option value="">বিভাগ সিলেক্ট করুন</option></select></div>
+                    <div class="form-group"><label>জেলা (District)</label><select id="customer-district" required><option value="">জেলা সিলেক্ট করুন</option></select></div>
                 </div>
 
-                <!-- Step 2: Payment -->
+                <!-- Step 2: Professional Payment Gateway Selection -->
                 <div class="form-step" id="step-2">
-                    <div class="payment-options-grid" id="payment-options-grid">
-                        <!-- COD Option (Dynamic) -->
-                        <div class="payment-card" id="cod-payment-card" data-type="cod">
-                            <label>
-                                <input type="radio" name="paymentOption" value="cod">
-                                <span class="payment-card-title">ক্যাশ অন ডেলিভারি (Cash on Delivery)</span>
-                                <span class="payment-card-desc">পণ্য হাতে পেয়ে সম্পূর্ণ টাকা পরিশোধ করুন।</span>
-                            </label>
+                    <div class="gateway-selector-title">পেমেন্ট মেথড সিলেক্ট করুন:</div>
+                    
+                    <div class="gateway-method-grid">
+                        <div class="gateway-method-card bkash active" id="method-card-bkash" data-method="bKash">
+                            <img src="https://freelogopng.com/images/all_img/1656227518bkash-logo-png.png" alt="bKash">
+                            <span style="font-size:11px; font-weight:700; margin-top:2px;">bKash</span>
                         </div>
-                        <!-- Advance Option -->
-                        <div class="payment-card active" id="advance-payment-card" data-type="advance">
-                            <label>
-                                <input type="radio" name="paymentOption" value="advance" checked>
-                                <span class="payment-card-title">অ্যাডভান্স পেমেন্ট</span>
-                                <span class="payment-card-desc">অর্ডার নিশ্চিত করতে <strong id="advance-amount-label">৳ ৫০০</strong> অগ্রিম দিন।</span>
-                            </label>
+                        <div class="gateway-method-card nagad" id="method-card-nagad" data-method="Nagad">
+                            <img src="https://freepnglogo.com/images/all_img/1725618764nagad-horizontal-logo-png.png" alt="Nagad">
+                            <span style="font-size:11px; font-weight:700; margin-top:2px;">Nagad</span>
                         </div>
-                        <!-- Full Option -->
-                        <div class="payment-card" id="full-payment-card" data-type="full">
-                            <label>
-                                <input type="radio" name="paymentOption" value="full">
-                                <span class="payment-card-title">সম্পূর্ণ অনলাইন পেমেন্ট</span>
-                                <span class="payment-card-desc">মোট মূল্য এখনই পরিশোধ করুন।</span>
-                            </label>
+                        <div class="gateway-method-card cod" id="method-card-cod" data-method="cod">
+                            <span style="font-size:22px;">💵</span>
+                            <span style="font-size:11px; font-weight:700;">ক্যাশ অন ডেলিভারি</span>
                         </div>
                     </div>
 
-                    <!-- Online Payment Module (bKash/Nagad) -->
-                    <div id="online-payment-module">
-                        <div class="payment-instructions" id="payment-instructions"></div>
-                        <div class="form-group"><label>ট্রানজেকশন আইডি (TrxID)</label><input type="text" id="transaction-id" placeholder="e.g. 9B7X8K1"></div>
-                        <div class="form-group"><label>আপনার পেমেন্ট নম্বর</label><input type="tel" id="payer-number" placeholder="01xxxxxxxxx"></div>
+                    <!-- Payment Type Options for Mobile Banking -->
+                    <div id="payment-type-wrapper" class="pay-type-container">
+                        <label class="pay-type-option">
+                            <input type="radio" name="paymentTypeOption" value="advance" checked>
+                            <div>
+                                <strong>অ্যাডভান্স পেমেন্ট (<span id="advance-amt-text">৳ ৫০০</span>)</strong>
+                                <div style="font-size:12px; color:var(--secondary-color);">বাকি টাকা ডেলিভারির সময় দেবেন।</div>
+                            </div>
+                        </label>
+                        <label class="pay-type-option" style="margin-top:8px;">
+                            <input type="radio" name="paymentTypeOption" value="full">
+                            <div>
+                                <strong>সম্পূর্ণ টাকা পেমেন্ট (<span id="full-amt-text">৳ 0</span>)</strong>
+                                <div style="font-size:12px; color:var(--secondary-color);">এখনই পুরো টাকা শোধ করুন।</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Instructions Box for Selected Gateway -->
+                    <div id="gateway-instruction-box" class="gateway-box">
+                        <img src="" id="gateway-logo-img" class="gateway-box-logo" alt="Payment">
+                        <p style="font-size:0.85rem; color:#475569;" id="gateway-instruction-text"></p>
+                        
+                        <div class="gateway-number-box">
+                            <strong id="gateway-target-number">017XXXXXXXX</strong>
+                            <button type="button" class="copy-btn" id="copy-number-btn">কপি</button>
+                        </div>
+
+                        <div id="gateway-admin-note" style="font-size:0.8rem; color:#64748b; font-style:italic; margin-bottom:12px;"></div>
+
+                        <div class="form-group" style="text-align:left;">
+                            <label>আপনার <span id="payer-method-label">bKash</span> নম্বর</label>
+                            <input type="tel" id="payer-number" placeholder="01xxxxxxxxx">
+                        </div>
+                        <div class="form-group" style="text-align:left;">
+                            <label>ট্রানজেকশন আইডি (TrxID)</label>
+                            <input type="text" id="transaction-id" placeholder="e.g. 9B7X8K1">
+                        </div>
+                    </div>
+
+                    <!-- COD Notice Box -->
+                    <div id="cod-notice-box" style="display:none; background:#ecfdf5; border:1px solid #a7f3d0; padding:15px; border-radius:10px; text-align:center; color:#065f46;">
+                        <h4 style="margin-bottom:4px;">💵 ক্যাশ অন ডেলিভারি সিলেক্ট করা হয়েছে</h4>
+                        <p style="font-size:0.85rem;">পণ্য হাতে পেয়ে সম্পূর্ণ মূল্য পরিশোধ করুন। এখন কোনো অনলাইন পেমেন্ট করার প্রয়োজন নেই।</p>
                     </div>
 
                     <!-- Coupon Input -->
-                    <div style="margin-top:20px; background:#f8fafc; padding:12px; border-radius:8px; border:1px dashed var(--border-color);">
+                    <div style="margin-top:15px; background:#f8fafc; padding:12px; border-radius:8px; border:1px dashed var(--border-color);">
                         <label style="font-size:0.85rem; font-weight:600;">কুপন কোড (যদি থাকে)</label>
                         <div style="display:flex; gap:8px; margin-top:6px;">
                             <input type="text" id="coupon-code-input" placeholder="CODE" style="text-transform:uppercase; font-weight:600; padding:8px 12px;">
@@ -281,12 +328,12 @@
                     <div class="summary-card">
                         <h5>পেমেন্ট সামারি</h5>
                         <div class="summary-row"><span>প্রোডাক্ট:</span> <span id="review-product"></span></div>
-                        <div class="summary-row"><span>পেমেন্ট টাইপ:</span> <span id="review-payment-type"></span></div>
+                        <div class="summary-row"><span>পেমেন্ট মাধ্যম:</span> <span id="review-payment-method"></span></div>
                         <div class="summary-row"><span>সাবটোটাল:</span> <span id="summary-subtotal"></span></div>
                         <div class="summary-row"><span>ডেলিভারি চার্জ:</span> <span id="summary-delivery"></span></div>
                         <div class="summary-row" id="summary-discount-row" style="display:none; color:var(--success-color);"><span>ডিসকাউন্ট:</span> <span id="summary-discount-amount"></span></div>
                         <div class="summary-row total"><span>মোট প্রদেয়:</span> <span id="summary-total"></span></div>
-                        <div class="summary-row" style="margin-top:6px; font-weight:700; color:var(--accent-color);"><span>এখন পেমেন্ট করবেন:</span> <span id="summary-paid-now"></span></div>
+                        <div class="summary-row" style="margin-top:6px; font-weight:700; color:#2563eb;"><span>এখন পেমেন্ট করবেন:</span> <span id="summary-paid-now"></span></div>
                     </div>
                 </div>
             </form>
@@ -299,7 +346,7 @@
         </div>
     </div>
 
-    <!-- Modal Footer Navigation (Always Visible at Bottom) -->
+    <!-- Modal Footer Navigation -->
     <div class="modal-footer" id="modal-footer-nav">
         <button type="button" class="btn btn-secondary" id="btn-prev" onclick="nextPrev(-1)" style="display:none;">আগের ধাপ</button>
         <button type="button" class="btn btn-primary" id="btn-next" onclick="nextPrev(1)">পরবর্তী ধাপ</button>
@@ -342,10 +389,30 @@
     let currentStep = 1;
     const TOTAL_STEPS = 3;
 
-    let globalSettings = { bkashNumber: "01721393555", nagadNumber: "01721393555", shippingCharge: 110, advancePaymentAmount: 500, paymentNote: "" };
+    // Dynamic Admin Settings State
+    let globalSettings = {
+        bkashNumber: "01721393555",
+        nagadNumber: "01721393555",
+        shippingCharge: 110,
+        advancePaymentAmount: 500,
+        paymentNote: "আমাদের ক্যাশ আউট বা সেন্ড মানি করুন।"
+    };
+    
+    let selectedPaymentMethod = 'bKash'; // 'bKash', 'Nagad', 'cod'
     let appliedCoupon = null;
 
-    const bdDivisions = ["ঢাকা", "চট্টগ্রাম", "খুলনা", "রাজশাহী", "বরিশাল", "সিলেট", "রংপুর", "ময়মনসিংহ"];
+    // Bangladesh 64 Districts List
+    const bdDistricts = [
+        "ঢাকা", "গাজীপুর", "নারায়ণগঞ্জ", "টাঙ্গাইল", "মুন্সীগঞ্জ", "মানিকগঞ্জ", "নরসিংদী", "ফরিদপুর", "মাদারীপুর", "গোপালগঞ্জ", "রাজবাড়ী", "শরীয়তপুর", "কিশোরগঞ্জ",
+        "চট্টগ্রাম", "কক্সবাজার", "কুমিল্লা", "ফেনী", "ব্রাহ্মণবাড়িয়া", "নোয়াখালী", "লক্ষ্মীপুর", "চাঁদপুর", "খাগড়াছড়ি", "রাঙ্গামাটি", "বান্দরবান",
+        "সিলেট", "মৌলভীবাজার", "হবিগঞ্জ", "সুনামগঞ্জ",
+        "রাজশাহী", "বগুড়া", "পাবনা", "সিরাজগঞ্জ", "নাটোর", "নওগাঁ", "চাপাইনবাবগঞ্জ", "জয়পুরহাট",
+        "খুলনা", "যশোর", "সাতক্ষীরা", "বাগেরহাট", "কুষ্টিয়া", "মেহেরপুর", "চুয়াডাঙ্গা", "ঝিনাইদহ", "মাগুরা", "নড়াইল",
+        "বরিশাল", "পটুয়াখালী", "ভোলা", "পিরোজপুর", "বরগুনা", "ঝালকাঠি",
+        "রংপুর", "দিনাজপুর", "গাইবান্ধা", "কুড়িগ্রাম", "লালমনিরহাট", "নীলফামারী", "পঞ্চগড়", "ঠাকুরগাঁও",
+        "ময়মনসিংহ", "জামালপুর", "নেত্রকোনা", "শেরপুর"
+    ];
+
     const orderModal = document.getElementById('order-modal');
     const reviewsModal = document.getElementById('reviews-modal');
 
@@ -358,8 +425,9 @@
         setTimeout(() => t.remove(), 3000);
     };
 
+    // Realtime Listener for Admin Settings
     const loadSettings = () => {
-        onValue(ref(db, 'settings'), snapshot => {
+        onValue(ref(db, 'settings'), (snapshot) => {
             if (snapshot.exists()) {
                 globalSettings = { ...globalSettings, ...snapshot.val() };
                 updatePriceAndPayment();
@@ -379,7 +447,7 @@
                 loading.style.display = 'none';
                 document.getElementById('product-content').style.display = 'block';
             } else { loading.textContent = 'প্রোডাক্ট পাওয়া যায়নি।'; }
-        } catch (e) { loading.textContent = 'ত্রুটি ঘটেছে।'; }
+        } catch (e) { loading.textContent = 'বিস্তারিত লোড করা যায়নি।'; }
     };
 
     const displayProductDetails = (product) => {
@@ -387,13 +455,11 @@
         document.getElementById('product-title').textContent = product.title;
         document.getElementById('description-content').innerHTML = (product.description || '').replace(/\n/g, '<br>');
 
-        // Badges
         const badgeContainer = document.getElementById('badge-container');
         badgeContainer.innerHTML = '';
         if (product.freeDelivery) badgeContainer.innerHTML += `<span class="badge badge-free">🚚 Free Delivery</span>`;
         if (product.allowCOD !== false) badgeContainer.innerHTML += `<span class="badge badge-cod">💵 Cash on Delivery Available</span>`;
 
-        // Images
         const images = product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls : [product.imageUrl];
         const mainImage = document.getElementById('main-product-image');
         const thumbContainer = document.getElementById('thumbnail-container');
@@ -411,7 +477,6 @@
             thumbContainer.appendChild(img);
         });
 
-        // Variants
         const variantWrapper = document.getElementById('variant-selector-wrapper');
         const variantContainer = document.getElementById('variant-options-container');
         variantContainer.innerHTML = '';
@@ -453,16 +518,17 @@
             origPriceEl.style.display = 'none';
         }
 
-        // COD Availability Toggle in Payment Modal
-        const codCard = document.getElementById('cod-payment-card');
+        // COD Hide if disabled in Admin Product setting
+        const codMethodCard = document.getElementById('method-card-cod');
         if (currentProduct.allowCOD === false) {
-            codCard.style.display = 'none';
-            // Default to advance if COD was selected
-            if (document.querySelector('input[name="paymentOption"]:checked')?.value === 'cod') {
-                document.querySelector('input[name="paymentOption"][value="advance"]').checked = true;
+            codMethodCard.style.display = 'none';
+            if (selectedPaymentMethod === 'cod') {
+                selectedPaymentMethod = 'bKash';
+                document.querySelectorAll('.gateway-method-card').forEach(c => c.classList.remove('active'));
+                document.getElementById('method-card-bkash').classList.add('active');
             }
         } else {
-            codCard.style.display = 'block';
+            codMethodCard.style.display = 'flex';
         }
 
         const quantity = parseInt(document.getElementById('quantity').value) || 1;
@@ -471,25 +537,61 @@
         const discount = appliedCoupon ? appliedCoupon.discountAmount : 0;
         const total = Math.max(0, subtotal + deliveryCharge - discount);
 
-        document.getElementById('advance-amount-label').textContent = `৳ ${globalSettings.advancePaymentAmount}`;
+        document.getElementById('advance-amt-text').textContent = `৳ ${globalSettings.advancePaymentAmount}`;
+        document.getElementById('full-amt-text').textContent = `৳ ${total.toFixed(2)}`;
 
-        const paymentType = document.querySelector('input[name="paymentOption"]:checked')?.value || 'advance';
-        const onlinePaymentModule = document.getElementById('online-payment-module');
+        const payTypeWrapper = document.getElementById('payment-type-wrapper');
+        const instructionBox = document.getElementById('gateway-instruction-box');
+        const codNoticeBox = document.getElementById('cod-notice-box');
 
-        if (paymentType === 'cod') {
-            onlinePaymentModule.style.display = 'none';
+        if (selectedPaymentMethod === 'cod') {
+            payTypeWrapper.style.display = 'none';
+            instructionBox.style.display = 'none';
+            codNoticeBox.style.display = 'block';
         } else {
-            onlinePaymentModule.style.display = 'block';
-            const amountToPay = paymentType === 'full' ? total : globalSettings.advancePaymentAmount;
-            const instructions = document.getElementById('payment-instructions');
-            instructions.innerHTML = `
-                <p style="font-size:0.9rem;">বিকাশ/নগদে <strong>৳ ${amountToPay.toFixed(2)}</strong> পাঠান:</p>
-                <div class="payment-number-wrapper">
-                    <strong>${globalSettings.bkashNumber}</strong>
-                    <button type="button" class="copy-btn" onclick="navigator.clipboard.writeText('${globalSettings.bkashNumber}'); showToast('কপি হয়েছে!');">কপি</button>
-                </div>
-            `;
+            payTypeWrapper.style.display = 'block';
+            instructionBox.style.display = 'block';
+            codNoticeBox.style.display = 'none';
+
+            const logoImg = document.getElementById('gateway-logo-img');
+            const targetNumEl = document.getElementById('gateway-target-number');
+            const instructionText = document.getElementById('gateway-instruction-text');
+            const payerMethodLabel = document.getElementById('payer-method-label');
+
+            if (selectedPaymentMethod === 'bKash') {
+                logoImg.src = "https://freelogopng.com/images/all_img/1656227518bkash-logo-png.png";
+                targetNumEl.textContent = globalSettings.bkashNumber || '017XXXXXXXX';
+                instructionText.textContent = 'নিচের বিকাশ নম্বরে টাকা পাঠিয়ে Transaction ID লিখুন:';
+                payerMethodLabel.textContent = 'bKash';
+            } else {
+                logoImg.src = "https://freepnglogo.com/images/all_img/1725618764nagad-horizontal-logo-png.png";
+                targetNumEl.textContent = globalSettings.nagadNumber || '017XXXXXXXX';
+                instructionText.textContent = 'নিচের নগদ নম্বরে টাকা পাঠিয়ে Transaction ID লিখুন:';
+                payerMethodLabel.textContent = 'Nagad';
+            }
+
+            document.getElementById('gateway-admin-note').textContent = globalSettings.paymentNote || '';
         }
+    };
+
+    // Gateway Selection Click Handlers
+    document.querySelectorAll('.gateway-method-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.gateway-method-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            selectedPaymentMethod = card.dataset.method;
+            updatePriceAndPayment();
+        });
+    });
+
+    document.querySelectorAll('input[name="paymentTypeOption"]').forEach(radio => {
+        radio.addEventListener('change', updatePriceAndPayment);
+    });
+
+    // Copy Button Handler
+    document.getElementById('copy-number-btn').onclick = () => {
+        const num = document.getElementById('gateway-target-number').textContent;
+        navigator.clipboard.writeText(num).then(() => showToast('নম্বর কপি হয়েছে!'));
     };
 
     // Coupon Handler
@@ -525,7 +627,7 @@
         } catch (e) { console.error(e); }
     };
 
-    // Step Control
+    // Step Logic
     const showStep = (s) => {
         document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         document.getElementById(`step-${s}`).classList.add('active');
@@ -548,15 +650,14 @@
     const validateStep = (s) => {
         let valid = true;
         if (s === 1) {
-            ['customer-name', 'customer-phone', 'customer-address', 'customer-division'].forEach(id => {
+            ['customer-name', 'customer-phone', 'customer-address', 'customer-district'].forEach(id => {
                 const el = document.getElementById(id);
                 if (!el.value.trim()) { el.style.borderColor = 'var(--danger-color)'; valid = false; }
                 else { el.style.borderColor = 'var(--border-color)'; }
             });
         }
         if (s === 2) {
-            const pType = document.querySelector('input[name="paymentOption"]:checked')?.value;
-            if (pType !== 'cod') {
+            if (selectedPaymentMethod !== 'cod') {
                 ['transaction-id', 'payer-number'].forEach(id => {
                     const el = document.getElementById(id);
                     if (!el.value.trim()) { el.style.borderColor = 'var(--danger-color)'; valid = false; }
@@ -564,7 +665,7 @@
                 });
             }
         }
-        if (!valid) showToast('প্রয়োজনীয় তথ্য দিন', 'error');
+        if (!valid) showToast('প্রয়োজনীয় সব তথ্য দিন', 'error');
         return valid;
     };
 
@@ -574,13 +675,15 @@
         const deliveryCharge = currentProduct.freeDelivery ? 0 : (globalSettings.shippingCharge || 110);
         const discount = appliedCoupon ? appliedCoupon.discountAmount : 0;
         const total = Math.max(0, subtotal + deliveryCharge - discount);
-        const pType = document.querySelector('input[name="paymentOption"]:checked').value;
+        const payTypeOption = document.querySelector('input[name="paymentTypeOption"]:checked')?.value || 'advance';
 
         document.getElementById('review-name').textContent = document.getElementById('customer-name').value;
         document.getElementById('review-phone').textContent = document.getElementById('customer-phone').value;
-        document.getElementById('review-address').textContent = `${document.getElementById('customer-address').value}, ${document.getElementById('customer-division').value}`;
+        document.getElementById('review-address').textContent = `${document.getElementById('customer-address').value}, ${document.getElementById('customer-district').value}`;
         document.getElementById('review-product').textContent = `${currentProduct.title} (${selectedVariant.name}) × ${qty}`;
-        document.getElementById('review-payment-type').textContent = pType === 'cod' ? 'ক্যাশ অন ডেলিভারি' : pType === 'full' ? 'সম্পূর্ণ পেমেন্ট' : 'অ্যাডভান্স পেমেন্ট';
+        
+        let methodText = selectedPaymentMethod === 'cod' ? 'ক্যাশ অন ডেলিভারি (COD)' : `${selectedPaymentMethod} (${payTypeOption === 'full' ? 'সম্পূর্ণ পেমেন্ট' : 'অ্যাডভান্স পেমেন্ট'})`;
+        document.getElementById('review-payment-method').textContent = methodText;
         
         document.getElementById('summary-subtotal').textContent = `৳ ${subtotal}`;
         document.getElementById('summary-delivery').textContent = deliveryCharge === 0 ? 'ফ্রি' : `৳ ${deliveryCharge}`;
@@ -593,7 +696,7 @@
         }
 
         document.getElementById('summary-total').textContent = `৳ ${total.toFixed(2)}`;
-        const paidNow = pType === 'cod' ? 0 : pType === 'full' ? total : globalSettings.advancePaymentAmount;
+        const paidNow = selectedPaymentMethod === 'cod' ? 0 : payTypeOption === 'full' ? total : globalSettings.advancePaymentAmount;
         document.getElementById('summary-paid-now').textContent = `৳ ${paidNow.toFixed(2)}`;
     };
 
@@ -615,15 +718,15 @@
         const discountAmount = appliedCoupon ? appliedCoupon.discountAmount : 0;
         const totalAmount = Math.max(0, subtotal + deliveryCharge - discountAmount);
 
-        const pType = document.querySelector('input[name="paymentOption"]:checked').value;
-        const paidNow = pType === 'cod' ? 0 : pType === 'full' ? totalAmount : globalSettings.advancePaymentAmount;
+        const payTypeOption = document.querySelector('input[name="paymentTypeOption"]:checked')?.value || 'advance';
+        const paidNow = selectedPaymentMethod === 'cod' ? 0 : payTypeOption === 'full' ? totalAmount : globalSettings.advancePaymentAmount;
 
         const orderData = {
             customerInfo: {
                 name: document.getElementById('customer-name').value,
                 phone: document.getElementById('customer-phone').value,
                 address: document.getElementById('customer-address').value,
-                division: document.getElementById('customer-division').value
+                district: document.getElementById('customer-district').value
             },
             items: [{
                 id: currentProduct.id,
@@ -633,10 +736,10 @@
                 imageUrl: currentProduct.imageUrls?.[0] || currentProduct.imageUrl
             }],
             paymentInfo: {
-                type: pType,
-                method: pType === 'cod' ? 'Cash on Delivery' : 'bKash/Nagad',
-                transactionId: pType === 'cod' ? 'N/A' : document.getElementById('transaction-id').value,
-                payerNumber: pType === 'cod' ? 'N/A' : document.getElementById('payer-number').value,
+                type: selectedPaymentMethod === 'cod' ? 'cod' : payTypeOption,
+                method: selectedPaymentMethod,
+                transactionId: selectedPaymentMethod === 'cod' ? 'N/A' : document.getElementById('transaction-id').value,
+                payerNumber: selectedPaymentMethod === 'cod' ? 'N/A' : document.getElementById('payer-number').value,
                 amountPaid: paidNow
             },
             couponCode: appliedCoupon ? appliedCoupon.code : null,
@@ -665,19 +768,20 @@
             list.innerHTML = '';
             if (!s.exists()) { list.innerHTML = '<p>কোনো রিভিউ নেই</p>'; return; }
             Object.values(s.val()).forEach(r => {
-                list.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px 0;"><strong>${r.name}</strong> <span style="color:var(--warning-color)">${'★'.repeat(r.rating)}</span><p style="font-size:0.9rem; color:#666;">${r.comment}</p></div>`;
+                list.innerHTML += `<div style="border-bottom:1px solid #eee; padding:10px 0;"><strong>${r.name}</strong> <span style="color:#f59e0b">${'★'.repeat(r.rating)}</span><p style="font-size:0.9rem; color:#666;">${r.comment}</p></div>`;
             });
         });
     };
 
-    // Events
+    // Initializer
     document.addEventListener('DOMContentLoaded', () => {
         loadSettings();
         const params = new URLSearchParams(window.location.search);
         loadProduct(params.get('id'));
 
-        const divSel = document.getElementById('customer-division');
-        bdDivisions.forEach(d => divSel.innerHTML += `<option value="${d}">${d}</option>`);
+        // Populate 64 Districts
+        const districtSel = document.getElementById('customer-district');
+        bdDistricts.forEach(d => districtSel.innerHTML += `<option value="${d}">${d}</option>`);
     });
 
     document.getElementById('buy-now-btn').onclick = () => {
@@ -696,16 +800,6 @@
 
     document.getElementById('quantity-plus').onclick = () => { document.getElementById('quantity').value++; updatePriceAndPayment(); };
     document.getElementById('quantity-minus').onclick = () => { if (document.getElementById('quantity').value > 1) { document.getElementById('quantity').value--; updatePriceAndPayment(); } };
-
-    document.getElementById('payment-options-grid').onclick = (e) => {
-        const card = e.target.closest('.payment-card');
-        if (card) {
-            document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            card.querySelector('input').checked = true;
-            updatePriceAndPayment();
-        }
-    };
 </script>
 </body>
 </html>
