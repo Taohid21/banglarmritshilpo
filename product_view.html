@@ -46,12 +46,18 @@
     /* Product Info Section */
     .product-info-area { padding: 20px 25px; }
     #product-title {
-        font-size: 1.8rem; font-weight: 700; margin: 0 0 15px; color: #111;
+        font-size: 1.8rem; font-weight: 700; margin: 0 0 10px; color: #111;
         font-family: var(--font-family-en);
         display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
         overflow: hidden; text-overflow: ellipsis;
     }
     
+    .free-delivery-badge {
+        background-color: var(--success-color); color: white;
+        padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;
+        font-weight: 600; display: inline-block; margin-bottom: 15px;
+    }
+
     .selectors-container {
         display: flex; flex-direction: column; gap: 20px;
         margin: 20px 0; padding: 20px 0;
@@ -69,27 +75,27 @@
     .variant-option:hover .variant-label { border-color: var(--primary-color); color: var(--primary-color); }
     .variant-option input[type="radio"]:checked + .variant-label { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
     
-    .price-quantity-wrapper { display: flex; justify-content: space-between; align-items: center; }
+    .price-quantity-wrapper { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+    .price-box { display: flex; align-items: baseline; gap: 10px; }
     .price-box .current-price { font-size: 2.2rem; font-weight: 700; color: var(--primary-color); font-family: var(--font-family-en); }
+    .price-box .original-price { font-size: 1.3rem; color: var(--secondary-color); text-decoration: line-through; font-family: var(--font-family-en); }
+    
     .quantity-controls { display: flex; align-items: center; border: 2px solid var(--border-color); border-radius: 50px; overflow: hidden; }
     .quantity-btn { width: 38px; height: 38px; background-color: transparent; border: none; cursor: pointer; font-size: 22px; font-weight: 400; color: var(--secondary-color); transition: background-color 0.3s; }
     .quantity-btn:hover { background-color: #f1f1f1; color: var(--primary-color); }
     .quantity-input { width: 50px; height: 38px; text-align: center; border: none; font-size: 1.1rem; font-weight: 600; color: var(--primary-color); font-family: var(--font-family-en); -moz-appearance: textfield; }
     .quantity-input:focus { outline: none; }
-    .quantity-input::-webkit-outer-spin-button, .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     
     .description-section { margin-top: 20px; }
     .description-section h3 { font-size: 1.3rem; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
     #description-content { line-height: 1.8; color: #495057; }
 
-    /* --- FIXED BOTTOM ACTION BAR --- */
+    /* Fixed Bottom Action Bar */
     .bottom-action-bar {
         position: fixed; bottom: 0; left: 0; width: 100%;
         background-color: var(--card-bg);
-        display: flex; gap: 15px;
-        padding: 15px 20px;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-        z-index: 500;
+        display: flex; gap: 15px; padding: 15px 20px;
+        box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 500;
     }
     .action-btn {
         flex: 1; padding: 14px; font-size: 1.1rem;
@@ -105,7 +111,7 @@
     }
     .action-btn.buy-now:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-    /* --- FULL-SCREEN MODALS (Order & Reviews) --- */
+    /* Fullscreen Modals */
     .fullscreen-modal-overlay {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
         background-color: var(--card-bg); z-index: 1000;
@@ -121,59 +127,80 @@
     .modal-title { font-size: 1.4rem; margin: 0; }
     .close-modal-btn { background: none; border: none; font-size: 2.2rem; cursor: pointer; color: var(--secondary-color); line-height: 1; }
     
-    /* ******** ফিক্সড বাটন বারের জন্য আপডেট করা স্টাইল ******** */
     .modal-body {
-        padding: 20px 30px;
-        overflow-y: auto;
-        flex-grow: 1;
-        max-width: 800px;
-        width: 100%;
-        margin: 0 auto;
-        padding-bottom: 100px; /* ফিক্সড বাটন বারের জন্য অতিরিক্ত প্যাডিং */
+        padding: 20px 30px; overflow-y: auto; flex-grow: 1;
+        max-width: 800px; width: 100%; margin: 0 auto; padding-bottom: 100px;
     }
     #order-modal .form-navigation-btns {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 15px 25px;
-        background-color: var(--card-bg);
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-        z-index: 1010;
+        position: fixed; bottom: 0; left: 0; width: 100%;
+        display: flex; justify-content: space-between; padding: 15px 25px;
+        background-color: var(--card-bg); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 1010;
     }
     @media (min-width: 800px) {
-        /* কনটেইনারের বাইরে বাটন বার যাতে না ছড়ায় */
-        #order-modal .form-navigation-btns {
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 800px;
-        }
+        #order-modal .form-navigation-btns { left: 50%; transform: translateX(-50%); max-width: 800px; }
     }
-    /* ****************************************************** */
-
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* Reviews Section (inside modal) */
-    #reviews-content-wrapper { padding: 10px 0; }
-    #reviews-content { display: grid; grid-template-columns: 1fr; gap: 40px; } @media(min-width: 768px) { #reviews-content { grid-template-columns: 1fr 1fr; } } .review-summary h3, .review-form-container h3 { margin-top: 0; margin-bottom: 20px; font-size: 1.4rem; color: #111; } .average-rating-display { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; } .average-rating-display .avg-score { font-size: 2.5rem; font-weight: 700; } .total-reviews-text { color: var(--secondary-color); font-weight: 500; } .star-rating { display: flex; color: var(--warning-color); } .star-rating svg { width: 24px; height: 24px; } .review-list .review-card { border-bottom: 1px solid var(--border-color); padding: 20px 0; } .review-list .review-card:last-child { border-bottom: none; } .review-author { font-weight: 600; margin-bottom: 5px; } .review-date { font-size: 0.8rem; color: #999; margin-left: 10px; } .review-comment { margin-top: 10px; color: #555; } .star-input-group { display: flex; flex-direction: row-reverse; justify-content: flex-end; margin-bottom: 15px; } .star-input-group input[type="radio"] { display: none; } .star-input-group label { color: #ccc; cursor: pointer; transition: color 0.2s; padding: 0 2px; } .star-input-group label svg { width: 30px; height: 30px; } .star-input-group input:checked ~ label, .star-input-group label:hover, .star-input-group label:hover ~ label { color: var(--warning-color); }
-    .form-group input.invalid { border-color: var(--danger-color); }
-    
-    /* Toast (unchanged) */
+    /* Toast */
     #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
     .toast { padding: 15px 20px; border-radius: 6px; color: white; box-shadow: var(--shadow-md); opacity: 0; transform: translateX(100%); transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); font-family: var(--font-family-en); }
     .toast.show { opacity: 1; transform: translateX(0); } .toast.success { background-color: var(--success-color); } .toast.error { background-color: var(--danger-color); }
     
-    /* Order Form Styles */
-    .step-indicator { display: flex; justify-content: space-between; margin-bottom: 40px; position: relative; } .step { text-align: center; flex: 1; position: relative; z-index: 2; } .step-icon { width: 36px; height: 36px; border-radius: 50%; background-color: #e9ecef; border: 2px solid var(--border-color); display: inline-flex; justify-content: center; align-items: center; font-weight: 600; color: var(--secondary-color); transition: all 0.4s ease; } .step-label { margin-top: 10px; font-size: 1rem; font-weight: 500; color: var(--secondary-color); } .step.active .step-icon, .step.finish .step-icon { background-color: var(--primary-color); color: white; border-color: var(--primary-color); } .step.active .step-label, .step.finish .step-label { color: var(--primary-color); } .step-indicator::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 3px; background-color: var(--border-color); z-index: 1; } #progress-bar { position: absolute; top: 18px; left: 10%; height: 3px; background-color: var(--primary-color); z-index: 1; width: 0%; transition: width 0.4s ease; }
-    .form-step { display: none; } .form-step.active { display: block; animation: fadeIn 0.5s; } .form-step h4 { font-size: 1.5rem; text-align: center; margin-bottom: 30px; } .form-group { display: flex; flex-direction: column; margin-bottom: 20px; } .form-group label { margin-bottom: 8px; font-weight: 600; } .form-group input, .form-group select { width: 100%; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-family: var(--font-family-bn), var(--font-family-en); transition: all 0.3s; } .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 95, 115, 0.15); } 
-    /* .form-navigation-btns { moved to fixed position outside scrollable content } */ 
-    .btn { display: inline-block; padding: 14px 30px; font-size: 1rem; font-weight: 600; text-align: center; cursor: pointer; border: none; border-radius: 8px; transition: all 0.3s; flex-grow: 1; } 
-    .btn-primary { background-color: var(--primary-color); color: white; } .btn-secondary { background-color: var(--secondary-color); color: white; } #order-success-message { display: none; text-align: center; padding: 50px; background-color: #e9f7ef; color: #155724; border: 1px solid #c3e6cb; border-radius: var(--border-radius); }
-    .payment-option-selector .option { padding: 15px; border: 2px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: all .3s; } .payment-option-selector .option:hover { border-color: #a5a5a5; } .payment-option-selector .option.active { border-color: var(--primary-color); background-color: #f0f9ff; } .payment-option-selector .option-title { font-weight: 600; } .payment-module { margin-top: 20px; border: 1px dashed var(--border-color); padding: 20px; border-radius: 8px; } .payment-methods { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; } .payment-method { padding: 10px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; } .payment-method img { height: 40px; display: block; } .payment-method.active { border-color: var(--primary-color); box-shadow: 0 0 10px rgba(0, 95, 115, 0.2); } .payment-instructions { background-color: #f8f9fa; padding: 15px; border-radius: 6px; text-align: center; } .payment-number-wrapper { display: flex; align-items: center; justify-content: center; gap: 10px; } .payment-instructions strong { font-size: 20px; color: var(--primary-color); user-select: all; font-family: var(--font-family-en); } .copy-btn { background: none; border: 1px solid var(--primary-color); color: var(--primary-color); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px; }
-    .order-review-summary, .totals-summary { margin: 20px 0; padding: 20px; background-color: #f8f9fa; border-radius: 8px; } .order-review-summary h4, .totals-summary h4 { margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; } .review-item { display: flex; justify-content: space-between; margin-bottom: 8px; } .totals-summary p { display: flex; justify-content: space-between; margin: 10px 0; font-size: 16px; } .totals-summary .grand-total { font-weight: bold; font-size: 20px; border-top: 2px solid var(--border-color); padding-top: 10px; margin-top: 10px; } .btn-prev { visibility: hidden; } .btn:disabled { background-color: #ced4da; cursor: not-allowed; opacity: 0.7; }
+    /* Order Form & Coupons */
+    .step-indicator { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; } 
+    .step { text-align: center; flex: 1; position: relative; z-index: 2; } 
+    .step-icon { width: 36px; height: 36px; border-radius: 50%; background-color: #e9ecef; border: 2px solid var(--border-color); display: inline-flex; justify-content: center; align-items: center; font-weight: 600; color: var(--secondary-color); transition: all 0.4s ease; } 
+    .step-label { margin-top: 8px; font-size: 0.95rem; font-weight: 500; color: var(--secondary-color); } 
+    .step.active .step-icon, .step.finish .step-icon { background-color: var(--primary-color); color: white; border-color: var(--primary-color); } 
+    .step.active .step-label, .step.finish .step-label { color: var(--primary-color); } 
+    .step-indicator::before { content: ''; position: absolute; top: 18px; left: 10%; right: 10%; height: 3px; background-color: var(--border-color); z-index: 1; } 
+    #progress-bar { position: absolute; top: 18px; left: 10%; height: 3px; background-color: var(--primary-color); z-index: 1; width: 0%; transition: width 0.4s ease; }
+    
+    .form-step { display: none; } .form-step.active { display: block; animation: fadeIn 0.4s; } 
+    .form-step h4 { font-size: 1.4rem; text-align: center; margin-bottom: 25px; } 
+    .form-group { display: flex; flex-direction: column; margin-bottom: 18px; } 
+    .form-group label { margin-bottom: 6px; font-weight: 600; } 
+    .form-group input, .form-group select { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-family: inherit; transition: all 0.3s; } 
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 95, 115, 0.15); } 
+    
+    .coupon-box { margin: 20px 0; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px dashed var(--border-color); }
+    .coupon-input-group { display: flex; gap: 10px; margin-top: 8px; }
+    .coupon-input-group input { flex: 1; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+    .coupon-msg { font-size: 0.9rem; margin-top: 8px; display: block; font-weight: 500; }
+    .coupon-msg.success { color: var(--success-color); }
+    .coupon-msg.error { color: var(--danger-color); }
+
+    .btn { display: inline-block; padding: 12px 25px; font-size: 1rem; font-weight: 600; text-align: center; cursor: pointer; border: none; border-radius: 8px; transition: all 0.3s; flex-grow: 1; } 
+    .btn-primary { background-color: var(--primary-color); color: white; } 
+    .btn-secondary { background-color: var(--secondary-color); color: white; } 
+    .btn-success { background-color: var(--success-color); color: white; }
+    
+    #order-success-message { display: none; text-align: center; padding: 50px 20px; background-color: #e9f7ef; color: #155724; border: 1px solid #c3e6cb; border-radius: var(--border-radius); }
+    
+    .payment-option-selector .option { padding: 15px; border: 2px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: all .3s; } 
+    .payment-option-selector .option:hover { border-color: #a5a5a5; } 
+    .payment-option-selector .option.active { border-color: var(--primary-color); background-color: #f0f9ff; } 
+    .payment-option-selector .option-title { font-weight: 600; } 
+    .payment-module { margin-top: 20px; border: 1px dashed var(--border-color); padding: 20px; border-radius: 8px; } 
+    .payment-methods { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; } 
+    .payment-method { padding: 10px 15px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; } 
+    .payment-method img { height: 35px; display: block; } 
+    .payment-method.active { border-color: var(--primary-color); box-shadow: 0 0 10px rgba(0, 95, 115, 0.2); } 
+    
+    .payment-instructions { background-color: #f8f9fa; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 15px; } 
+    .payment-number-wrapper { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 5px; } 
+    .payment-instructions strong { font-size: 20px; color: var(--primary-color); font-family: var(--font-family-en); } 
+    .copy-btn { background: none; border: 1px solid var(--primary-color); color: var(--primary-color); border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px; }
+    .payment-note { font-size: 0.85rem; color: #666; margin-top: 8px; font-style: italic; }
+
+    .order-review-summary, .totals-summary { margin: 20px 0; padding: 18px; background-color: #f8f9fa; border-radius: 8px; } 
+    .order-review-summary h4, .totals-summary h4 { margin-top: 0; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; } 
+    .review-item { display: flex; justify-content: space-between; margin-bottom: 8px; } 
+    .totals-summary p { display: flex; justify-content: space-between; margin: 8px 0; font-size: 15px; } 
+    .totals-summary .grand-total { font-weight: bold; font-size: 18px; border-top: 2px solid var(--border-color); padding-top: 10px; margin-top: 10px; color: var(--primary-color); } 
+    .btn-prev { visibility: hidden; } 
+    .btn:disabled { background-color: #ced4da; cursor: not-allowed; opacity: 0.7; }
 </style>
 </head>
 <body>
@@ -190,6 +217,8 @@
         <!-- Product Info Area -->
         <div class="product-info-area">
             <h1 id="product-title"></h1>
+            <div id="free-delivery-tag-container"></div>
+            
             <div class="selectors-container">
                 <div class="variant-selector">
                     <label>সাইজ সিলেক্ট করুন:</label>
@@ -197,6 +226,7 @@
                 </div>
                 <div class="price-quantity-wrapper">
                     <div class="price-box">
+                        <span id="original-price" class="original-price"></span>
                         <span id="product-price" class="current-price"></span>
                     </div>
                     <div class="quantity-selector">
@@ -222,7 +252,7 @@
     <button id="buy-now-btn" class="action-btn buy-now">Buy Now</button>
 </div>
 
-<!-- Reviews Modal (Full Screen) -->
+<!-- Reviews Modal -->
 <div id="reviews-modal" class="fullscreen-modal-overlay">
     <div class="modal-page-header">
         <h2 class="modal-title">কাস্টমার রিভিউ</h2>
@@ -242,11 +272,11 @@
                         <div class="form-group">
                             <label>আপনার রেটিং</label>
                             <div class="star-input-group">
-                                <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg></label>
-                                <input type="radio" id="star4" name="rating" value="4"><label for="star4" title="4 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg></label>
-                                <input type="radio" id="star3" name="rating" value="3"><label for="star3" title="3 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg></label>
-                                <input type="radio" id="star2" name="rating" value="2"><label for="star2" title="2 stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg></label>
-                                <input type="radio" id="star1" name="rating" value="1"><label for="star1" title="1 star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg></label>
+                                <input type="radio" id="star5" name="rating" value="5" required><label for="star5">★</label>
+                                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
                             </div>
                         </div>
                         <div class="form-group"><label for="reviewer-name">আপনার নাম</label><input type="text" id="reviewer-name" required></div>
@@ -259,7 +289,7 @@
     </div>
 </div>
 
-<!-- Order Modal (Full Screen) -->
+<!-- Order Modal -->
 <div id="order-modal" class="fullscreen-modal-overlay">
     <div class="modal-page-header">
         <h2 class="modal-title">আপনার অর্ডারটি সম্পন্ন করুন</h2>
@@ -274,6 +304,8 @@
                     <div class="step" data-step="2"><div class="step-icon">২</div><div class="step-label">পেমেন্ট</div></div>
                     <div class="step" data-step="3"><div class="step-icon">৩</div><div class="step-label">রিভিউ</div></div>
                 </div>
+                
+                <!-- Step 1: Address -->
                 <div class="form-step active" id="step-1">
                     <h4>ডেলিভারি তথ্য</h4>
                     <div class="form-group"><label for="customer-name">সম্পূর্ণ নাম</label><input type="text" id="customer-name" required></div>
@@ -281,12 +313,28 @@
                     <div class="form-group"><label for="customer-address">সম্পূর্ণ ঠিকানা</label><input type="text" id="customer-address" required placeholder="বাসা নং, রোড নং, এলাকা"></div>
                     <div class="form-group"><label for="customer-division">বিভাগ</label><select id="customer-division" required><option value="">বিভাগ সিলেক্ট করুন</option></select></div>
                 </div>
+                
+                <!-- Step 2: Payment & Coupon -->
                 <div class="form-step" id="step-2">
                     <h4>পেমেন্ট অপশন</h4>
+                    
                     <div class="payment-option-selector" id="payment-option-selector">
-                        <div class="option active" data-type="advance"><label><input type="radio" name="paymentOption" value="advance" checked><span class="option-title">অ্যাডভান্স পেমেন্ট করুন</span><p>অর্ডার কনফার্ম করতে শুধু অ্যাডভান্স চার্জ <strong id="advance-payment-amount-label">৳ ৫০০</strong> পেমেন্ট করুন।</p></label></div>
-                        <div class="option" data-type="full"><label><input type="radio" name="paymentOption" value="full"><span class="option-title">সম্পূর্ণ টাকা পেমেন্ট করুন</span><p>মোট <strong id="full-payment-amount-label"></strong> এখনই পেমেন্ট করুন।</p></label></div>
+                        <div class="option active" data-type="advance">
+                            <label>
+                                <input type="radio" name="paymentOption" value="advance" checked>
+                                <span class="option-title">অ্যাডভান্স পেমেন্ট করুন</span>
+                                <p>অর্ডার কনফার্ম করতে শুধু অ্যাডভান্স চার্জ <strong id="advance-payment-amount-label">৳ ৫০০</strong> পেমেন্ট করুন।</p>
+                            </label>
+                        </div>
+                        <div class="option" data-type="full">
+                            <label>
+                                <input type="radio" name="paymentOption" value="full">
+                                <span class="option-title">সম্পূর্ণ টাকা পেমেন্ট করুন</span>
+                                <p>মোট <strong id="full-payment-amount-label"></strong> এখনই পেমেন্ট করুন।</p>
+                            </label>
+                        </div>
                     </div>
+
                     <div class="payment-module">
                         <div class="payment-methods">
                             <div class="payment-method active" data-method="bKash"><img src="https://freelogopng.com/images/all_img/1656227518bkash-logo-png.png" alt="bKash"></div>
@@ -294,11 +342,23 @@
                         </div>
                         <div id="payment-instructions" class="payment-instructions"></div>
                         <div class="payment-form">
-                           <div class="form-group"><label for="transaction-id">ট্রানজেকশন আইডি (TrxID)</label><input type="text" id="transaction-id" required></div>
-                           <div class="form-group"><label for="payer-number">আপনার <span id="payment-method-name">bKash</span> নম্বর</label><input type="tel" id="payer-number" required></div>
+                           <div class="form-group"><label for="transaction-id">ট্রানজেকশন আইডি (TrxID)</label><input type="text" id="transaction-id" required placeholder="e.g. 9B7X8K1"></div>
+                           <div class="form-group"><label for="payer-number">আপনার <span id="payment-method-name">bKash</span> নম্বর</label><input type="tel" id="payer-number" required placeholder="01xxxxxxxxx"></div>
                         </div>
                     </div>
+
+                    <!-- Coupon Code Box -->
+                    <div class="coupon-box">
+                        <label><strong>কুপন কোড (যদি থাকে)</strong></label>
+                        <div class="coupon-input-group">
+                            <input type="text" id="coupon-code-input" placeholder="e.g. EID20">
+                            <button type="button" class="btn btn-secondary" id="apply-coupon-btn">এপ্লাই</button>
+                        </div>
+                        <span id="coupon-message" class="coupon-msg"></span>
+                    </div>
                 </div>
+                
+                <!-- Step 3: Order Review -->
                 <div class="form-step" id="step-3">
                     <h4>আপনার অর্ডার রিভিউ করুন</h4>
                     <div class="order-review-summary">
@@ -317,6 +377,7 @@
                         <h4>সর্বমোট হিসাব</h4>
                         <p><span>সাবটোটাল:</span> <span id="summary-subtotal"></span></p>
                         <p><span>ডেলিভারি চার্জ:</span> <span id="summary-delivery"></span></p>
+                        <p id="summary-discount-row" style="display:none; color:var(--success-color);"><span>কুপন ডিসকাউন্ট (<span id="summary-coupon-code"></span>):</span> <span id="summary-discount-amount"></span></p>
                         <p class="grand-total"><span>মোট প্রদেয়:</span> <span id="summary-total"></span></p>
                         <p><strong><span>এখন পেমেন্ট করেছেন:</span> <span id="summary-paid-now"></span></strong></p>
                     </div>
@@ -329,48 +390,54 @@
         </div>
     </div>
 
-    <!-- ফিক্সড বাটন বার -->
+    <!-- Navigation Buttons -->
     <div class="form-navigation-btns">
         <button type="button" class="btn btn-secondary btn-prev" onclick="nextPrev(-1)">আগের ধাপ</button>
         <button type="button" class="btn btn-primary btn-next" onclick="nextPrev(1)">পরবর্তী ধাপ</button>
     </div>
 </div>
+
 <div id="toast-container"></div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, get, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // --- Firebase Config ---
     const firebaseConfig = {
-    apiKey: "AIzaSyD_HBGuQSh_GzqrHqHbgdaoBikLZsK3Qqs",
-    authDomain: "new-all-f99f7.firebaseapp.com",
-    databaseURL: "https://new-all-f99f7-default-rtdb.firebaseio.com",
-    projectId: "new-all-f99f7",
-    storageBucket: "new-all-f99f7.firebasestorage.app",
-    messagingSenderId: "1069748173900",
-    appId: "1:1069748173900:web:158d6336c0f4628133c8e9",
-    measurementId: "G-V6DZ37WSBF"
-  };
+        apiKey: "AIzaSyD_HBGuQSh_GzqrHqHbgdaoBikLZsK3Qqs",
+        authDomain: "new-all-f99f7.firebaseapp.com",
+        databaseURL: "https://new-all-f99f7-default-rtdb.firebaseio.com",
+        projectId: "new-all-f99f7",
+        storageBucket: "new-all-f99f7.firebasestorage.app",
+        messagingSenderId: "1069748173900",
+        appId: "1:1069748173900:web:158d6336c0f4628133c8e9",
+        measurementId: "G-V6DZ37WSBF"
+    };
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const auth = getAuth(app);
 
-    // --- State, Constants & DOM Elements ---
+    // State Variables
     let currentProduct = null;
     let selectedVariant = null;
     let currentStep = 1;
     const TOTAL_STEPS = 3;
-    const DELIVERY_CHARGE = 110;
-    const ADVANCE_PAYMENT_AMOUNT = 500; // <--- নতুন অ্যাডভান্স পেমেন্ট
-    const BKASH_NUMBER = "01721393555";
-    const NAGAD_NUMBER = "01721393555";
+    
+    // Dynamic Settings (Loaded from Firebase)
+    let globalSettings = {
+        bkashNumber: "01721393555",
+        nagadNumber: "01721393555",
+        shippingCharge: 110,
+        advancePaymentAmount: 500,
+        paymentNote: "আমাদের নম্বরে সেন্ড মানি করুন।"
+    };
+    
+    let appliedCoupon = null; // { code, discountAmount }
+
     const bdDivisions = ["ঢাকা", "চট্টগ্রাম", "খুলনা", "রাজশাহী", "বরিশাল", "সিলেট", "রংপুর", "ময়মনসিংহ"];
     const orderModal = document.getElementById('order-modal');
     const reviewsModal = document.getElementById('reviews-modal');
     
-    // --- Helper Functions ---
+    // Helper Functions
     const showToast = (message, type = 'success') => {
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
@@ -383,11 +450,22 @@
             setTimeout(() => toast.remove(), 500);
         }, 3000);
     };
+
     const copyToClipboard = (text) => {
         navigator.clipboard.writeText(text).then(() => showToast('নম্বর কপি হয়েছে!'), () => showToast('কপি করা যায়নি।', 'error'));
     };
 
-    // --- Product Loading & Display ---
+    // Load Settings from Realtime Database
+    const loadSettings = () => {
+        onValue(ref(db, 'settings'), (snapshot) => {
+            if (snapshot.exists()) {
+                globalSettings = { ...globalSettings, ...snapshot.val() };
+                updatePriceAndPayment();
+            }
+        });
+    };
+
+    // Product Loading
     const loadProduct = async (productId) => {
         const loadingState = document.getElementById('loading-state');
         if (!productId) { loadingState.textContent = 'প্রোডাক্ট খুঁজে পাওয়া যায়নি।'; return; }
@@ -407,6 +485,14 @@
         document.title = product.title;
         document.getElementById('product-title').textContent = product.title;
         document.getElementById('description-content').innerHTML = product.description.replace(/\n/g, '<br>');
+
+        // Free Delivery Badge Check
+        const freeDeliveryContainer = document.getElementById('free-delivery-tag-container');
+        if (product.freeDelivery) {
+            freeDeliveryContainer.innerHTML = `<span class="free-delivery-badge">🚚 Free Delivery</span>`;
+        } else {
+            freeDeliveryContainer.innerHTML = '';
+        }
 
         const images = product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls : [product.imageUrl];
         const mainImage = document.getElementById('main-product-image');
@@ -444,17 +530,15 @@
         } else {
             variantSelector.style.display = 'none';
         }
-        
-        // অ্যাডভান্স লেবেল আপডেট
-        document.getElementById('advance-payment-amount-label').textContent = `৳ ${ADVANCE_PAYMENT_AMOUNT.toFixed(2)}`;
 
         updatePriceAndPayment();
     };
 
     const updatePriceAndPayment = () => {
+        if (!currentProduct) return;
+
         const selectedRadio = document.querySelector('input[name="productVariant"]:checked');
-        
-        if (selectedRadio) {
+        if (selectedRadio && currentProduct.variants) {
             selectedVariant = currentProduct.variants[selectedRadio.value];
         } else if (currentProduct.price) {
             selectedVariant = { name: 'Standard', price: currentProduct.price };
@@ -463,29 +547,105 @@
             return;
         }
 
-        document.getElementById('product-price').textContent = `৳ ${selectedVariant.price}`;
-        document.querySelector('.price-box').style.display = 'block';
+        // Display Regular vs Discounted Price
+        const priceEl = document.getElementById('product-price');
+        const originalPriceEl = document.getElementById('original-price');
+        
+        priceEl.textContent = `৳ ${selectedVariant.price}`;
+        if (selectedVariant.originalPrice && selectedVariant.originalPrice > selectedVariant.price) {
+            originalPriceEl.textContent = `৳ ${selectedVariant.originalPrice}`;
+            originalPriceEl.style.display = 'inline';
+        } else {
+            originalPriceEl.style.display = 'none';
+        }
 
+        // Calculate Totals & Shipping
         const quantity = parseInt(document.getElementById('quantity').value) || 1;
         const subtotal = selectedVariant.price * quantity;
-        const total = subtotal + DELIVERY_CHARGE;
+        const deliveryCharge = currentProduct.freeDelivery ? 0 : (globalSettings.shippingCharge || 110);
         
-        // পেমেন্ট অপশন আপডেট
+        let discount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+        const total = Math.max(0, subtotal + deliveryCharge - discount);
+        
+        // Update Advance Payment Label
+        document.getElementById('advance-payment-amount-label').textContent = `৳ ${globalSettings.advancePaymentAmount.toFixed(2)}`;
         document.getElementById('full-payment-amount-label').textContent = `(৳ ${total.toFixed(2)})`;
         
-        const paymentType = document.querySelector('input[name="paymentOption"]:checked').value;
-        // পেমেন্টের পরিমাণ অ্যাডভান্স হলে ৫০০ টাকা
-        const amountToPay = paymentType === 'full' ? total : ADVANCE_PAYMENT_AMOUNT; 
+        const paymentType = document.querySelector('input[name="paymentOption"]:checked')?.value || 'advance';
+        const amountToPay = paymentType === 'full' ? total : globalSettings.advancePaymentAmount; 
         
-        const activePaymentMethod = document.querySelector('.payment-method.active').dataset.method;
-        const number = activePaymentMethod === 'bKash' ? BKASH_NUMBER : NAGAD_NUMBER;
+        const activePaymentMethod = document.querySelector('.payment-method.active')?.dataset.method || 'bKash';
+        const number = activePaymentMethod === 'bKash' ? globalSettings.bkashNumber : globalSettings.nagadNumber;
         
         const instructionsEl = document.getElementById('payment-instructions');
-        instructionsEl.innerHTML = `<p>এই ${activePaymentMethod} নম্বরে <strong>৳ ${amountToPay.toFixed(2)}</strong> সেন্ড মানি করুন:</p><div class="payment-number-wrapper"><strong id="payment-number">${number}</strong><button type="button" class="copy-btn">কপি</button></div>`;
+        instructionsEl.innerHTML = `
+            <p>এই ${activePaymentMethod} নম্বরে <strong>৳ ${amountToPay.toFixed(2)}</strong> পাঠান:</p>
+            <div class="payment-number-wrapper">
+                <strong id="payment-number">${number}</strong>
+                <button type="button" class="copy-btn">কপি</button>
+            </div>
+            ${globalSettings.paymentNote ? `<div class="payment-note">${globalSettings.paymentNote}</div>` : ''}
+        `;
         instructionsEl.querySelector('.copy-btn').onclick = () => copyToClipboard(number);
     };
 
-    // --- Reviews Logic (Unchanged) ---
+    // Coupon Code Validation
+    const handleApplyCoupon = async () => {
+        const input = document.getElementById('coupon-code-input');
+        const msg = document.getElementById('coupon-message');
+        const code = input.value.trim().toUpperCase();
+
+        if (!code) {
+            msg.className = 'coupon-msg error';
+            msg.textContent = 'দয়া করে কুপন কোড লিখুন।';
+            return;
+        }
+
+        try {
+            const snapshot = await get(ref(db, `coupons/${code}`));
+            if (!snapshot.exists() || snapshot.val().active === false) {
+                msg.className = 'coupon-msg error';
+                msg.textContent = 'কুপনটি সঠিক নয় অথবা মেয়াদ শেষ।';
+                appliedCoupon = null;
+                updatePriceAndPayment();
+                return;
+            }
+
+            const coupon = snapshot.val();
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            const subtotal = selectedVariant.price * quantity;
+
+            if (coupon.minOrder && subtotal < coupon.minOrder) {
+                msg.className = 'coupon-msg error';
+                msg.textContent = `এই কুপনটি ব্যবহার করতে সর্বনিম্ন ৳${coupon.minOrder} টাকার অর্ডার হতে হবে।`;
+                appliedCoupon = null;
+                updatePriceAndPayment();
+                return;
+            }
+
+            let discountAmount = 0;
+            if (coupon.type === 'percentage') {
+                discountAmount = (subtotal * coupon.value) / 100;
+            } else {
+                discountAmount = coupon.value;
+            }
+
+            appliedCoupon = { code: coupon.code, discountAmount };
+            msg.className = 'coupon-msg success';
+            msg.textContent = `কুপন সফলভাবে এপ্লাই হয়েছে! (ছাড়: ৳${discountAmount.toFixed(2)})`;
+            updatePriceAndPayment();
+            showToast('কুপন ডিসকাউন্ট যোগ হয়েছে!');
+
+        } catch (err) {
+            console.error(err);
+            msg.className = 'coupon-msg error';
+            msg.textContent = 'কুপন যাঁচাই করতে সমস্যা হচ্ছে।';
+        }
+    };
+
+    document.getElementById('apply-coupon-btn').onclick = handleApplyCoupon;
+
+    // Reviews System
     const fetchAndDisplayReviews = (productId) => {
         const reviewsRef = ref(db, `reviews/${productId}`);
         onValue(reviewsRef, (snapshot) => {
@@ -504,13 +664,14 @@
                 totalRating += Number(review.rating);
                 const card = document.createElement('div');
                 card.className = 'review-card';
-                card.innerHTML = `<div class="star-rating">${'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>'.repeat(review.rating)}</div><p class="review-author">${review.name}<span class="review-date">${new Date(review.timestamp).toLocaleDateString('bn-BD')}</span></p><p class="review-comment">${review.comment}</p>`;
+                card.innerHTML = `<div class="star-rating" style="color:var(--warning-color);">${'★'.repeat(review.rating)}</div><p class="review-author"><strong>${review.name}</strong> <small style="color:#888;">${new Date(review.timestamp).toLocaleDateString('bn-BD')}</small></p><p class="review-comment">${review.comment}</p><hr style="border:0; border-top:1px solid #eee;">`;
                 reviewList.appendChild(card);
             });
             const avgRating = (totalRating / reviewIds.length).toFixed(1);
-            reviewSummaryDisplay.innerHTML = `<div class="average-rating-display"><span class="avg-score">${avgRating}</span><div><div class="star-rating">${'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>'.repeat(Math.round(avgRating))}</div><p class="total-reviews-text">${reviewIds.length} টি রিভিউ এর উপর ভিত্তি করে</p></div></div>`;
+            reviewSummaryDisplay.innerHTML = `<div style="display:flex; align-items:center; gap:10px;"><span style="font-size:2rem; font-weight:bold;">${avgRating}</span><div><div style="color:var(--warning-color);">${'★'.repeat(Math.round(avgRating))}</div><small>${reviewIds.length} টি রিভিউর উপর ভিত্তি করে</small></div></div>`;
         });
     };
+
     const handleReviewSubmit = async (e) => {
         e.preventDefault();
         const form = e.target;
@@ -526,7 +687,7 @@
         } catch (error) { showToast('রিভিউ সাবমিট করা যায়নি।', 'error'); console.error(error); }
     };
 
-    // --- Modal Control Functions (Unchanged) ---
+    // Modal Control Functions
     const openOrderModal = () => {
         if (!selectedVariant) { showToast('দয়া করে প্রথমে সাইজ সিলেক্ট করুন।', 'error'); return; }
         currentStep = 1; 
@@ -548,7 +709,7 @@
         document.body.classList.remove('modal-open');
     };
 
-    // --- Order Form Step Logic ---
+    // Step Logic
     const updateStepIndicator = () => {
         const steps = document.querySelectorAll('#order-modal .step');
         steps.forEach((step, index) => {
@@ -559,6 +720,7 @@
         const progressPercentage = TOTAL_STEPS > 1 ? ((currentStep - 1) / (TOTAL_STEPS - 1)) * 80 : 0;
         document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
     };
+
     const showStep = (stepNumber) => {
         document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         document.getElementById(`step-${stepNumber}`).classList.add('active');
@@ -573,25 +735,26 @@
         }
         updateStepIndicator();
     };
+
     const validateStep = (stepNumber) => {
         let isValid = true;
         document.querySelectorAll(`#step-${stepNumber} [required]`).forEach(input => {
-            input.classList.remove('invalid');
-            if (!input.value.trim()) { input.classList.add('invalid'); isValid = false; }
+            input.style.borderColor = '#e9ecef';
+            if (!input.value.trim()) { input.style.borderColor = 'var(--danger-color)'; isValid = false; }
         });
         if (!isValid) showToast('দয়া করে প্রয়োজনীয় সব তথ্য দিন।', 'error');
         return isValid;
     };
     
-    // UPDATE: populateReviewStep now uses ADVANCE_PAYMENT_AMOUNT
     const populateReviewStep = () => {
         const quantity = parseInt(document.getElementById('quantity').value) || 1;
         const subtotal = selectedVariant.price * quantity;
-        const total = subtotal + DELIVERY_CHARGE;
-        const paymentType = document.querySelector('input[name="paymentOption"]:checked').value;
+        const deliveryCharge = currentProduct.freeDelivery ? 0 : (globalSettings.shippingCharge || 110);
+        const discount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+        const total = Math.max(0, subtotal + deliveryCharge - discount);
         
-        // পেমেন্ট করা পরিমাণ
-        const amountPaidNow = paymentType === 'full' ? total : ADVANCE_PAYMENT_AMOUNT; 
+        const paymentType = document.querySelector('input[name="paymentOption"]:checked').value;
+        const amountPaidNow = paymentType === 'full' ? total : globalSettings.advancePaymentAmount; 
 
         document.getElementById('review-name').textContent = document.getElementById('customer-name').value;
         document.getElementById('review-phone').textContent = document.getElementById('customer-phone').value;
@@ -599,8 +762,18 @@
         document.getElementById('review-product').textContent = `${currentProduct.title} (${selectedVariant.name}) x ${quantity}`;
         document.getElementById('review-payment-type').textContent = paymentType === 'full' ? 'সম্পূর্ণ পেমেন্ট' : 'অ্যাডভান্স পেমেন্ট';
         document.getElementById('review-payment-method').textContent = `${document.querySelector('.payment-method.active').dataset.method} - ${document.getElementById('payer-number').value} (TrxID: ${document.getElementById('transaction-id').value})`;
+        
         document.getElementById('summary-subtotal').textContent = `৳ ${subtotal.toFixed(2)}`;
-        document.getElementById('summary-delivery').textContent = `৳ ${DELIVERY_CHARGE.toFixed(2)}`;
+        document.getElementById('summary-delivery').textContent = deliveryCharge === 0 ? 'ফ্রি ডেলিভারি' : `৳ ${deliveryCharge.toFixed(2)}`;
+        
+        if (discount > 0) {
+            document.getElementById('summary-discount-row').style.display = 'flex';
+            document.getElementById('summary-coupon-code').textContent = appliedCoupon.code;
+            document.getElementById('summary-discount-amount').textContent = `-৳ ${discount.toFixed(2)}`;
+        } else {
+            document.getElementById('summary-discount-row').style.display = 'none';
+        }
+
         document.getElementById('summary-total').textContent = `৳ ${total.toFixed(2)}`;
         document.getElementById('summary-paid-now').textContent = `৳ ${amountPaidNow.toFixed(2)}`;
     };
@@ -613,34 +786,53 @@
         showStep(currentStep);
     };
 
-    /**
-     * UPDATED: handleOrderSubmit
-     * Amount Paid logic updated to use ADVANCE_PAYMENT_AMOUNT.
-     */
     const handleOrderSubmit = async () => {
         const confirmBtn = document.querySelector('.btn-next');
         confirmBtn.disabled = true; confirmBtn.textContent = 'প্রসেসিং...';
         
-        const currentUser = auth.currentUser;
-
         const quantity = parseInt(document.getElementById('quantity').value) || 1;
         const subtotal = selectedVariant.price * quantity;
-        const totalAmount = subtotal + DELIVERY_CHARGE;
-        const paymentType = document.querySelector('input[name="paymentOption"]:checked').value;
+        const deliveryCharge = currentProduct.freeDelivery ? 0 : (globalSettings.shippingCharge || 110);
+        const discountAmount = appliedCoupon ? appliedCoupon.discountAmount : 0;
+        const totalAmount = Math.max(0, subtotal + deliveryCharge - discountAmount);
         
-        // পেমেন্ট করা পরিমাণ এখানে আপডেট করা হয়েছে
-        const amountPaid = paymentType === 'full' ? totalAmount : ADVANCE_PAYMENT_AMOUNT; 
+        const paymentType = document.querySelector('input[name="paymentOption"]:checked').value;
+        const amountPaid = paymentType === 'full' ? totalAmount : globalSettings.advancePaymentAmount; 
         
         const orderData = {
-            userId: currentUser ? currentUser.uid : null, 
-            customerInfo: { name: document.getElementById('customer-name').value, phone: document.getElementById('customer-phone').value, address: document.getElementById('customer-address').value, division: document.getElementById('customer-division').value, },
-            items: [{ id: currentProduct.id, title: currentProduct.title, variant: selectedVariant, quantity: quantity, imageUrl: currentProduct.imageUrls[0] || currentProduct.imageUrl }],
-            paymentInfo: { type: paymentType, method: document.querySelector('.payment-method.active').dataset.method, transactionId: document.getElementById('transaction-id').value, payerNumber: document.getElementById('payer-number').value, amountPaid: amountPaid },
-            deliveryCharge: DELIVERY_CHARGE, subtotal: subtotal, totalAmount: totalAmount, status: 'Pending', orderDate: new Date().toISOString()
+            customerInfo: { 
+                name: document.getElementById('customer-name').value, 
+                phone: document.getElementById('customer-phone').value, 
+                address: document.getElementById('customer-address').value, 
+                division: document.getElementById('customer-division').value 
+            },
+            items: [{ 
+                id: currentProduct.id, 
+                title: currentProduct.title, 
+                variant: selectedVariant, 
+                quantity: quantity, 
+                imageUrl: currentProduct.imageUrls?.[0] || currentProduct.imageUrl 
+            }],
+            paymentInfo: { 
+                type: paymentType, 
+                method: document.querySelector('.payment-method.active').dataset.method, 
+                transactionId: document.getElementById('transaction-id').value, 
+                payerNumber: document.getElementById('payer-number').value, 
+                amountPaid: amountPaid 
+            },
+            couponCode: appliedCoupon ? appliedCoupon.code : null,
+            discountAmount: discountAmount,
+            deliveryCharge: deliveryCharge, 
+            subtotal: subtotal, 
+            totalAmount: totalAmount, 
+            status: 'Pending', 
+            orderDate: new Date().toISOString()
         };
+
         try {
             await set(push(ref(db, 'orders')), orderData);
             document.getElementById('order-form-container').style.display = 'none';
+            document.querySelector('.form-navigation-btns').style.display = 'none';
             document.getElementById('order-success-message').style.display = 'block';
         } catch (error) {
             showToast('অর্ডার করা যায়নি। আবার চেষ্টা করুন।', 'error');
@@ -648,27 +840,29 @@
         }
     };
     
-    // --- Event Listeners ---
+    // Initializer
     document.addEventListener('DOMContentLoaded', () => {
+        loadSettings();
         const urlParams = new URLSearchParams(window.location.search);
         loadProduct(urlParams.get('id'));
+        
         const divisionSelect = document.getElementById('customer-division');
         bdDivisions.forEach(division => divisionSelect.innerHTML += `<option value="${division}">${division}</option>`);
     });
 
-    // Bottom Action Bar Listeners
+    // Event Listeners
     document.getElementById('buy-now-btn').onclick = openOrderModal;
     document.getElementById('reviews-btn').onclick = openReviewsModal;
     
-    // Modal Close Listeners
     document.getElementById('close-order-modal').onclick = closeOrderModal;
     document.getElementById('close-reviews-modal').onclick = closeReviewsModal;
     
-    // Other Listeners
     document.getElementById('quantity-plus').onclick = () => { document.getElementById('quantity').stepUp(); updatePriceAndPayment(); };
     document.getElementById('quantity-minus').onclick = () => { document.getElementById('quantity').stepDown(); updatePriceAndPayment(); };
     document.getElementById('quantity').oninput = updatePriceAndPayment;
+    
     document.getElementById('review-form').addEventListener('submit', handleReviewSubmit);
+    
     document.getElementById('payment-option-selector').addEventListener('click', (e) => {
         const targetOption = e.target.closest('.option');
         if (targetOption) {
@@ -678,6 +872,7 @@
             updatePriceAndPayment();
         }
     });
+
     document.querySelectorAll('.payment-method').forEach(method => {
         method.addEventListener('click', () => {
             document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
