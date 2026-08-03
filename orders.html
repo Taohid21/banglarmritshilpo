@@ -2,138 +2,313 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders - Banglar Mirtshilpo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>আমার অর্ডার ট্র্যাকিং | Banglar Mirtshilpo</title>
+
+    <link rel="icon" href="https://i.postimg.cc/cCKd21YV/FB-IMG-1751915283498-prev-ui.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary-color: #1B4332;
-            --secondary-color: #2d3748;
-            --accent-color: #FF7B00;
-            --success-color: #2a9d8f;
-            --pending-color: #fca311;
-            --danger-color: #e74c3c;
-            --confirmed-color: #3498db; 
-            --background-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --border-color: #e9ecef;
-            --font-family-bn: 'Hind Siliguri', sans-serif;
-            --font-family-en: 'Poppins', sans-serif;
-            --shadow: 0 4px 15px rgba(0,0,0,0.06);
+            --terracotta: #A64B2A;
+            --clay-dark: #231612;
+            --clay-ochre: #D3753B;
+            --sand-bg: #F5EFE6;
+            --card-bg: #FFFFFF;
+            --border-color: #E2D5C3;
+            --text-main: #2C1D18;
+            --text-light: #6E5E58;
+            --success: #10B981;
+            --info: #3B82F6;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --font-bn: 'Anek Bangla', sans-serif;
+            --font-en: 'Poppins', sans-serif;
+            --shadow-card: 0 4px 15px rgba(166, 75, 42, 0.07);
+            --shadow-soft: 0 10px 25px rgba(35, 22, 18, 0.08);
         }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: var(--font-family-bn), var(--font-family-en);
-            background-color: var(--background-color); margin: 0;
-            color: var(--secondary-color);
+            font-family: var(--font-bn), var(--font-en), sans-serif;
+            background-color: var(--sand-bg);
+            background-image: radial-gradient(rgba(166, 75, 42, 0.05) 1px, transparent 1px), radial-gradient(rgba(35, 22, 18, 0.04) 1px, var(--sand-bg) 1px);
+            background-size: 20px 20px;
+            color: var(--text-main);
+            min-height: 100vh;
         }
-        .page-wrapper { max-width: 900px; margin: 0 auto; padding: 20px 15px; }
 
-        /* Modern Header */
+        /* Navigation Header */
         .page-header {
-            background-color: var(--card-bg);
-            padding: 20px 30px; border-radius: 12px;
-            box-shadow: var(--shadow); margin-bottom: 30px;
-            display: flex; justify-content: space-between; align-items: center;
+            background-color: var(--clay-dark);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            position: sticky; top: 0; z-index: 100;
         }
-        .page-header h1 {
-            color: var(--primary-color); font-size: 1.8rem; margin: 0;
-            font-family: var(--font-family-en);
-        }
-        .page-header .back-link {
-            text-decoration: none; background-color: var(--border-color);
-            color: var(--secondary-color); font-weight: 600;
-            padding: 8px 16px; border-radius: 8px; transition: all 0.3s;
-        }
-        .page-header .back-link:hover { background-color: #d8dee2; }
 
-        /* Accordion Order Card */
-        .order-card-accordion {
+        .page-header .logo img { height: 45px; width: auto; }
+
+        .back-btn {
+            color: #FFF;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(255,255,255,0.1);
+            padding: 8px 14px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .back-btn:hover { background-color: var(--terracotta); }
+
+        .page-wrapper {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 16px;
+        }
+
+        .page-title-box {
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .page-title-box h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--clay-dark);
+        }
+
+        /* Order Accordion Card */
+        .order-card {
             background-color: var(--card-bg);
-            border-radius: 12px; margin-bottom: 20px;
-            box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: box-shadow 0.3s;
         }
-        .order-summary-header {
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 15px; align-items: center;
-            padding: 20px; cursor: pointer;
-        }
-        @media (min-width: 768px) { .order-summary-header { grid-template-columns: 1fr 1fr 1fr auto; } }
-        
-        .summary-item { font-size: 0.95rem; }
-        .summary-item strong {
-            display: block; color: #6c757d;
-            font-size: 0.85rem; font-weight: 500; margin-bottom: 2px;
-        }
-        .order-status {
-            padding: 6px 14px; border-radius: 50px;
-            font-weight: 600; text-align: center; color: white;
-            font-size: 0.8rem;
-            /* স্ট্যাটাস লেখার জন্য ইংরেজি ফন্ট ব্যবহার করা হচ্ছে */
-            font-family: var(--font-family-en);
-        }
-        .status-pending { background-color: var(--pending-color); }
-        .status-shipped { background-color: var(--success-color); }
-        .status-delivered { background-color: var(--primary-color); }
-        .status-cancelled { background-color: var(--danger-color); }
-        .status-confirmed { background-color: var(--confirmed-color); }
+        .order-card.open { box-shadow: var(--shadow-soft); border-color: var(--terracotta); }
 
-        .details-toggle-icon {
-            width: 24px; height: 24px;
-            transition: transform 0.4s ease;
+        /* Card Header Summary */
+        .order-card-header {
+            padding: 18px 20px;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            align-items: center;
+            background-color: #FFF;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .order-card-header { grid-template-columns: 1.2fr 1fr 1fr auto; }
+        }
+
+        .summary-item strong {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .summary-item span {
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--clay-dark);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #FFF;
+            text-align: center;
+        }
+        .status-pending { background-color: var(--warning); }
+        .status-confirmed { background-color: var(--info); }
+        .status-shipped { background-color: var(--clay-ochre); }
+        .status-delivered { background-color: var(--success); }
+        .status-cancelled { background-color: var(--danger); }
+
+        .toggle-arrow {
+            width: 22px; height: 22px;
+            stroke: var(--terracotta);
+            transition: transform 0.3s ease;
             justify-self: end;
         }
-        .order-card-accordion.open .details-toggle-icon { transform: rotate(180deg); }
+        .order-card.open .toggle-arrow { transform: rotate(180deg); }
 
-        /* Collapsible Details Panel */
+        /* Order Details Panel */
         .order-details-panel {
             max-height: 0;
             overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+            background-color: #FAF8F5;
+            border-top: 1px solid var(--border-color);
+        }
+        .order-card.open .order-details-panel {
+            max-height: 2000px;
             transition: max-height 0.5s ease-in-out;
-            border-top: 1px solid transparent;
-        }
-        .order-card-accordion.open .order-details-panel { border-top-color: var(--border-color); }
-        .order-details-content { padding: 20px; }
-        
-        .details-grid {
-            display: grid; grid-template-columns: 1fr;
-            gap: 30px;
-        }
-        @media (min-width: 768px) { .details-grid { grid-template-columns: 1fr 1fr; } }
-        .details-section h3 {
-            font-size: 1.2rem; margin-top: 0; margin-bottom: 15px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 8px; display: inline-block;
         }
 
-        /* Product List in Details */
-        .product-list-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .product-list-item img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
-        .product-list-item-info p { margin: 0; line-height: 1.4; }
-        .product-list-item-info .title { font-weight: 600; }
-        .product-list-item-info .variant { font-size: 0.9rem; color: #6c757d; }
+        .details-content { padding: 20px; }
 
-        /* Info List (Shipping, Payment) */
-        .info-list p { display: flex; justify-content: space-between; margin: 8px 0; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; }
-        .info-list p span:first-child { font-weight: 500; color: #6c757d; }
-        .info-list p span:last-child { font-weight: 600; text-align: right; }
-        
-        #loading, #no-orders { text-align: center; padding: 60px; font-size: 1.2rem; color: #6c757d; }
+        /* Progress Step Tracker */
+        .tracker-wrapper {
+            margin-bottom: 25px;
+            padding: 15px 10px;
+            background-color: #FFF;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+        }
+
+        .tracker-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .tracker-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px; left: 15%; right: 15%;
+            height: 3px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-icon {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background-color: #E2D5C3;
+            color: #FFF;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 6px;
+            border: 2px solid #FFF;
+        }
+
+        .step-label { font-size: 0.78rem; font-weight: 600; color: var(--text-light); }
+
+        .step-item.completed .step-icon { background-color: var(--success); }
+        .step-item.completed .step-label { color: var(--clay-dark); }
+        .step-item.current .step-icon { background-color: var(--terracotta); box-shadow: 0 0 0 4px rgba(166, 75, 42, 0.2); }
+        .step-item.current .step-label { color: var(--terracotta); font-weight: 700; }
+
+        /* Product Table / List */
+        .section-heading {
+            font-size: 1.05rem; font-weight: 700; color: var(--clay-dark);
+            margin-bottom: 12px; padding-bottom: 6px;
+            border-bottom: 2px solid var(--terracotta);
+            display: inline-block;
+        }
+
+        .product-item {
+            display: flex; gap: 14px; align-items: center;
+            background-color: #FFF; padding: 10px; border-radius: 8px;
+            border: 1px solid var(--border-color); margin-bottom: 10px;
+        }
+
+        .product-item img {
+            width: 60px; height: 60px; object-fit: cover; border-radius: 6px; flex-shrink: 0;
+        }
+
+        .product-info { flex-grow: 1; }
+        .product-title { font-weight: 600; font-size: 0.95rem; color: var(--clay-dark); }
+        .product-meta { font-size: 0.85rem; color: var(--text-light); }
+        .product-price { font-weight: 700; color: var(--terracotta); font-family: var(--font-en); }
+
+        /* Grid for Info Cards */
+        .info-grid {
+            display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px;
+        }
+        @media (min-width: 768px) { .info-grid { grid-template-columns: 1fr 1fr; } }
+
+        .info-box {
+            background-color: #FFF; padding: 15px; border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-row {
+            display: flex; justify-content: space-between;
+            font-size: 0.9rem; margin-bottom: 8px; padding-bottom: 4px;
+            border-bottom: 1px dashed #EDE5D8;
+        }
+        .info-row:last-child { border-bottom: none; margin-bottom: 0; }
+        .info-row .label { color: var(--text-light); font-weight: 500; }
+        .info-row .val { font-weight: 700; color: var(--clay-dark); text-align: right; }
+
+        .badge-free {
+            background-color: var(--success); color: white;
+            padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;
+        }
+
+        /* Empty State & Loader */
+        .loading-box, .empty-box {
+            text-align: center; padding: 50px 20px; background: #FFF;
+            border-radius: 14px; border: 1px solid var(--border-color); color: var(--text-light);
+        }
+
+        .spinner {
+            width: 35px; height: 35px; border: 4px solid var(--border-color);
+            border-top-color: var(--terracotta); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <div class="page-header">
-            <h1>My Orders</h1>
-            <a href="index.html" class="back-link">হোমপেজ</a>
+
+    <!-- Header -->
+    <header class="page-header">
+        <a href="index.html" class="logo"><img src="Banglar_Mirtshilpo.png" alt="Logo"></a>
+        <a href="index.html" class="back-btn">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            হোমে ফিরুন
+        </a>
+    </header>
+
+    <main class="page-wrapper">
+        <div class="page-title-box">
+            <h1>আমার অর্ডার ও ট্র্যাকিং</h1>
         </div>
-        <div id="orders-list">
-            <p id="loading">অর্ডার লোড হচ্ছে...</p>
-            <p id="no-orders" style="display:none;">আপনি এখনও কোনো অর্ডার করেননি।</p>
+
+        <div id="orders-container">
+            <div class="loading-box" id="loading-box">
+                <div class="spinner"></div>
+                <p>আপনার অর্ডারসমূহ লোড করা হচ্ছে...</p>
+            </div>
+            <div class="empty-box" id="empty-box" style="display: none;">
+                <p style="font-size: 1.1rem; font-weight: 600; color: var(--clay-dark); margin-bottom: 8px;">আপনার কোনো অর্ডার হিস্ট্রি পাওয়া যায়নি!</p>
+                <a href="index.html" class="back-btn" style="display: inline-block; background-color: var(--terracotta);">পণ্য দেখুন</a>
+            </div>
         </div>
-    </div>
+    </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -141,158 +316,255 @@
         import { getDatabase, ref, query, orderByChild, equalTo, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         const firebaseConfig = {
-    apiKey: "AIzaSyD_HBGuQSh_GzqrHqHbgdaoBikLZsK3Qqs",
-    authDomain: "new-all-f99f7.firebaseapp.com",
-    databaseURL: "https://new-all-f99f7-default-rtdb.firebaseio.com",
-    projectId: "new-all-f99f7",
-    storageBucket: "new-all-f99f7.firebasestorage.app",
-    messagingSenderId: "1069748173900",
-    appId: "1:1069748173900:web:158d6336c0f4628133c8e9",
-    measurementId: "G-V6DZ37WSBF"
-  };
+            apiKey: "AIzaSyD_HBGuQSh_GzqrHqHbgdaoBikLZsK3Qqs",
+            authDomain: "new-all-f99f7.firebaseapp.com",
+            databaseURL: "https://new-all-f99f7-default-rtdb.firebaseio.com",
+            projectId: "new-all-f99f7",
+            storageBucket: "new-all-f99f7.firebasestorage.app",
+            messagingSenderId: "1069748173900",
+            appId: "1:1069748173900:web:158d6336c0f4628133c8e9"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        const ordersListContainer = document.getElementById('orders-list');
-        const loadingEl = document.getElementById('loading');
-        const noOrdersEl = document.getElementById('no-orders');
+        const ordersContainer = document.getElementById('orders-container');
+        const loadingBox = document.getElementById('loading-box');
+        const emptyBox = document.getElementById('empty-box');
 
         onAuthStateChanged(auth, user => {
             if (user) {
-                fetchUserOrders(user.uid);
+                fetchOrders(user.uid, user.email);
             } else {
                 window.location.href = 'account.html';
             }
         });
 
-        function fetchUserOrders(userId) {
+        const fetchOrders = (userId, userEmail) => {
             const ordersRef = ref(db, 'orders');
-            const userOrdersQuery = query(ordersRef, orderByChild('userId'), equalTo(userId));
+            onValue(ordersRef, snapshot => {
+                loadingBox.style.display = 'none';
+                if (!snapshot.exists()) {
+                    emptyBox.style.display = 'block';
+                    return;
+                }
 
-            onValue(userOrdersQuery, (snapshot) => {
-                loadingEl.style.display = 'none';
-                ordersListContainer.innerHTML = ''; 
-                
-                if (snapshot.exists()) {
-                    const orders = snapshot.val();
-                    const sortedOrderIds = Object.keys(orders).sort((a,b) => new Date(orders[b].orderDate) - new Date(orders[a].orderDate));
-                    sortedOrderIds.forEach(orderId => {
-                        const order = orders[orderId];
-                        ordersListContainer.appendChild(createOrderCard(orderId, order));
-                    });
+                const data = snapshot.val();
+                // Filter user orders by UID or Email
+                const myOrders = Object.keys(data)
+                    .map(key => ({ id: key, ...data[key] }))
+                    .filter(order => order.userId === userId || order.customerInfo?.email === userEmail)
+                    .sort((a, b) => new Date(b.orderDate || b.timestamp) - new Date(a.orderDate || a.timestamp));
+
+                if (myOrders.length === 0) {
+                    emptyBox.style.display = 'block';
                 } else {
-                    noOrdersEl.style.display = 'block';
+                    emptyBox.style.display = 'none';
+                    renderOrders(myOrders);
                 }
             });
-        }
+        };
 
-        // === জাভাস্ক্রিপ্ট ফাংশনটি আপডেট করা হয়েছে ===
-        function createOrderCard(orderId, order) {
+        const renderOrders = (ordersList) => {
+            // Remove previous rendered cards except loading & empty
+            document.querySelectorAll('.order-card').forEach(el => el.remove());
+
+            ordersList.forEach(order => {
+                const card = createOrderCard(order);
+                ordersContainer.appendChild(card);
+            });
+        };
+
+        const createOrderCard = (order) => {
             const card = document.createElement('div');
-            card.className = 'order-card-accordion';
-            
-            // স্ট্যাটাস লজিক উন্নত করা হয়েছে
-            let displayStatus = 'Pending';
-            let statusClass = 'status-pending';
-            const rawStatus = (order.status || 'Pending').toLowerCase().trim(); // ডেটাবেস থেকে স্ট্যাটাস নেওয়া
+            card.className = 'order-card';
 
-            // Capitalize the first letter for a clean display
-            const capitalize = (s) => s && s.charAt(0).toUpperCase() + s.slice(1) || "";
+            const rawStatus = (order.status || 'pending').toLowerCase();
+            let statusBadge = '';
+            let stepIndex = 1;
 
-            switch (rawStatus) {
+            switch(rawStatus) {
                 case 'pending':
-                    displayStatus = 'Pending'; // ইংরেজিতে পরিবর্তন করা হয়েছে
-                    statusClass = 'status-pending';
-                    break;
+                    statusBadge = `<span class="status-badge status-pending">অপেক্ষমাণ</span>`;
+                    stepIndex = 1; break;
                 case 'confirmed':
-                    displayStatus = 'Confirmed'; // ইংরেজিতে পরিবর্তন করা হয়েছে
-                    statusClass = 'status-confirmed';
-                    break;
+                    statusBadge = `<span class="status-badge status-confirmed">কনফার্মড</span>`;
+                    stepIndex = 2; break;
                 case 'shipped':
-                    displayStatus = 'Shipped'; // ইংরেজিতে পরিবর্তন করা হয়েছে
-                    statusClass = 'status-shipped';
-                    break;
+                case 'on_delivery':
+                    statusBadge = `<span class="status-badge status-shipped">ডেলিভারির পথে</span>`;
+                    stepIndex = 3; break;
                 case 'delivered':
-                    displayStatus = 'Delivered'; // ইংরেজিতে পরিবর্তন করা হয়েছে
-                    statusClass = 'status-delivered';
-                    break;
+                case 'completed':
+                    statusBadge = `<span class="status-badge status-delivered">ডেলিভারি সম্পন্ন</span>`;
+                    stepIndex = 4; break;
                 case 'cancelled':
                 case 'canceled':
-                case 'cancel':
-                    displayStatus = 'Cancelled'; // ইংরেজিতে পরিবর্তন করা হয়েছে
-                    statusClass = 'status-cancelled';
-                    break;
+                    statusBadge = `<span class="status-badge status-cancelled">বাতিলকৃত</span>`;
+                    stepIndex = 0; break;
                 default:
-                    // যদি কোনো অপরিচিত স্ট্যাটাস আসে, সেটিও ইংরেজিতে দেখাবে
-                    displayStatus = capitalize(order.status); 
-                    statusClass = 'status-pending';
-                    break;
+                    statusBadge = `<span class="status-badge status-pending">${order.status}</span>`;
+                    stepIndex = 1;
             }
 
-            const productsHtml = order.items.map(item => `
-                <div class="product-list-item">
-                    <img src="${item.imageUrl}" alt="${item.title}">
-                    <div class="product-list-item-info">
-                        <p class="title">${item.title}</p>
-                        <p class="variant">${item.variant.name} × ${item.quantity}</p>
+            // Calculations
+            const items = order.items || [];
+            let subtotal = 0;
+            items.forEach(i => {
+                const itemPrice = i.price || (i.variant ? i.variant.price : 0);
+                subtotal += itemPrice * (i.quantity || 1);
+            });
+
+            const deliveryCharge = order.deliveryCharge !== undefined ? order.deliveryCharge : (order.isFreeDelivery ? 0 : 60);
+            const discount = order.discount || 0;
+            const totalAmount = order.totalAmount || (subtotal + deliveryCharge - discount);
+            const amountPaid = order.paymentInfo?.amountPaid || order.paidAmount || 0;
+            const dueAmount = Math.max(0, totalAmount - amountPaid);
+
+            const formattedDate = order.orderDate ? new Date(order.orderDate).toLocaleDateString('bn-BD') : 'তারিখ পাওয়া যায়নি';
+
+            // Products HTML
+            const productsHTML = items.map(item => {
+                const pTitle = item.title || 'মাটির পণ্য';
+                const pImg = item.imageUrl || 'placeholder.jpg';
+                const pVariant = item.variant?.name || item.variant || 'স্ট্যান্ডার্ড';
+                const pPrice = item.price || (item.variant ? item.variant.price : 0);
+                const pQty = item.quantity || 1;
+
+                return `
+                    <div class="product-item">
+                        <img src="${pImg}" alt="${pTitle}">
+                        <div class="product-info">
+                            <div class="product-title">${pTitle}</div>
+                            <div class="product-meta">সাইজ/ভ্যারিয়েন্ট: ${pVariant} | পরিমাণ: ${pQty}টি</div>
+                        </div>
+                        <div class="product-price">৳ ${pPrice * pQty}</div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
+
+            // Steps Progress Bar HTML (if not cancelled)
+            let trackerHTML = '';
+            if (rawStatus !== 'cancelled' && rawStatus !== 'canceled') {
+                trackerHTML = `
+                    <div class="tracker-wrapper">
+                        <div class="tracker-steps">
+                            <div class="step-item ${stepIndex >= 1 ? 'completed' : ''} ${stepIndex === 1 ? 'current' : ''}">
+                                <div class="step-icon">1</div>
+                                <div class="step-label">অর্ডার গ্রহীত</div>
+                            </div>
+                            <div class="step-item ${stepIndex >= 2 ? 'completed' : ''} ${stepIndex === 2 ? 'current' : ''}">
+                                <div class="step-icon">2</div>
+                                <div class="step-label">কনফার্মড</div>
+                            </div>
+                            <div class="step-item ${stepIndex >= 3 ? 'completed' : ''} ${stepIndex === 3 ? 'current' : ''}">
+                                <div class="step-icon">3</div>
+                                <div class="step-label">শিপড</div>
+                            </div>
+                            <div class="step-item ${stepIndex >= 4 ? 'completed' : ''} ${stepIndex === 4 ? 'current' : ''}">
+                                <div class="step-icon">4</div>
+                                <div class="step-label">ডেলিভারড</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
 
             card.innerHTML = `
-                <div class="order-summary-header">
-                    <div class="summary-item"><strong>অর্ডার আইডি</strong> #${orderId.slice(-6).toUpperCase()}</div>
-                    <div class="summary-item"><strong>তারিখ</strong> ${new Date(order.orderDate).toLocaleDateString('bn-BD')}</div>
-                    <div class="summary-item"><strong>মোট টাকা</strong> ৳ ${order.totalAmount.toFixed(2)}</div>
-                    <div class="summary-item" style="display:flex; justify-content: space-between; align-items: center;">
-                        <span class="order-status ${statusClass}">${displayStatus}</span>
-                        <svg class="details-toggle-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                <div class="order-card-header">
+                    <div class="summary-item">
+                        <strong>অর্ডার আইডি</strong>
+                        <span>#${order.id.slice(-6).toUpperCase()}</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>তারিখ</strong>
+                        <span>${formattedDate}</span>
+                    </div>
+                    <div class="summary-item">
+                        <strong>মোট হিসাব</strong>
+                        <span>৳ ${totalAmount.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-item" style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                        ${statusBadge}
+                        <svg class="toggle-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </div>
                 </div>
+
                 <div class="order-details-panel">
-                    <div class="order-details-content">
-                        <div class="details-grid">
-                            <div class="details-section">
-                                <h3>অর্ডারকৃত পণ্য</h3>
-                                ${productsHtml}
-                            </div>
-                            <div class="details-section">
-                                <h3>ডেলিভারি তথ্য</h3>
-                                <div class="info-list">
-                                    <p><span>নাম:</span> <span>${order.customerInfo.name}</span></p>
-                                    <p><span>ফোন:</span> <span>${order.customerInfo.phone}</span></p>
-                                    <p><span>ঠিকানা:</span> <span>${order.customerInfo.address}, ${order.customerInfo.division}</span></p>
+                    <div class="details-content">
+                        ${trackerHTML}
+
+                        <div class="section-heading">অর্ডারকৃত পণ্যসামগ্রী</div>
+                        ${productsHTML}
+
+                        <div class="info-grid">
+                            <div class="info-box">
+                                <div class="section-heading" style="font-size:0.95rem; margin-bottom:8px;">পেমেন্ট ও মূল্যের হিসাব</div>
+                                <div class="info-row">
+                                    <span class="label">পণ্যসামগ্রীর মূল্য:</span>
+                                    <span class="val">৳ ${subtotal.toFixed(2)}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">ডেলিভারি চার্জ:</span>
+                                    <span class="val">${deliveryCharge === 0 ? '<span class="badge-free">ফ্রি ডেলিভারি</span>' : '৳ ' + deliveryCharge}</span>
+                                </div>
+                                ${discount > 0 ? `
+                                <div class="info-row">
+                                    <span class="label">ডিসকাউন্ট ছাড়:</span>
+                                    <span class="val" style="color:var(--success);">- ৳ ${discount}</span>
+                                </div>` : ''}
+                                <div class="info-row" style="font-weight:700; font-size:1rem;">
+                                    <span class="label" style="color:var(--clay-dark);">সর্বমোট মূল্য:</span>
+                                    <span class="val" style="color:var(--terracotta);">৳ ${totalAmount.toFixed(2)}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">পরিশোধিত অর্থ (অগ্রিম):</span>
+                                    <span class="val">৳ ${amountPaid.toFixed(2)}</span>
+                                </div>
+                                <div class="info-row" style="background:#FFF0EB; padding:6px; border-radius:6px; margin-top:6px;">
+                                    <span class="label" style="color:var(--terracotta); font-weight:700;">বকেয়া (ক্যাশ অন ডেলিভারি):</span>
+                                    <span class="val" style="color:var(--terracotta); font-weight:700;">৳ ${dueAmount.toFixed(2)}</span>
                                 </div>
                             </div>
-                            <div class="details-section" style="grid-column: 1 / -1;">
-                                <h3>পেমেন্ট তথ্য</h3>
-                                <div class="info-list">
-                                    <p><span>পেমেন্ট টাইপ:</span> <span>${order.paymentInfo.type === 'full' ? 'সম্পূর্ণ পেমেন্ট' : 'অ্যাডভান্স'}</span></p>
-                                    <p><span>পেমেন্ট মাধ্যম:</span> <span>${order.paymentInfo.method}</span></p>
-                                    <p><span>TrxID:</span> <span>${order.paymentInfo.transactionId}</span></p>
-                                    <p><span>মোট পরিশোধিত:</span> <span>৳ ${order.paymentInfo.amountPaid.toFixed(2)}</span></p>
+
+                            <div class="info-box">
+                                <div class="section-heading" style="font-size:0.95rem; margin-bottom:8px;">ডেলিভারি ও পেমেন্ট তথ্য</div>
+                                <div class="info-row">
+                                    <span class="label">প্রাপকের নাম:</span>
+                                    <span class="val">${order.customerInfo?.name || 'N/A'}</span>
                                 </div>
+                                <div class="info-row">
+                                    <span class="label">মোবাইল নম্বর:</span>
+                                    <span class="val">${order.customerInfo?.phone || 'N/A'}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">ডেলিভারি ঠিকানা:</span>
+                                    <span class="val">${order.customerInfo?.address || 'N/A'}, ${order.customerInfo?.division || ''}</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="label">পেমেন্ট মেথড:</span>
+                                    <span class="val">${order.paymentInfo?.method || order.paymentMethod || 'ক্যাশ অন ডেলিভারি'}</span>
+                                </div>
+                                ${order.paymentInfo?.transactionId ? `
+                                <div class="info-row">
+                                    <span class="label">TrxID:</span>
+                                    <span class="val" style="font-family:var(--font-en);">${order.paymentInfo.transactionId}</span>
+                                </div>` : ''}
                             </div>
                         </div>
                     </div>
                 </div>
             `;
-            
-            // Accordion toggle logic
-            const header = card.querySelector('.order-summary-header');
+
+            // Accordion Toggle Event
+            const header = card.querySelector('.order-card-header');
             header.addEventListener('click', () => {
-                const panel = card.querySelector('.order-details-panel');
                 card.classList.toggle('open');
-                if (card.classList.contains('open')) {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                } else {
-                    panel.style.maxHeight = null;
-                }
             });
 
             return card;
-        }
+        };
     </script>
 </body>
 </html>
