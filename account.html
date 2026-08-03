@@ -8,34 +8,30 @@
     <link rel="icon" href="https://i.postimg.cc/cCKd21YV/FB-IMG-1751915283498-prev-ui.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --terracotta: #A64B2A;
-            --clay-dark: #231612;
-            --clay-ochre: #D3753B;
-            --sand-bg: #F5EFE6;
+            --primary: #A64B2A;         /* Terracotta Accent */
+            --primary-hover: #8C3C1E;
+            --bg-body: #F8FAFC;         /* Clean White/Light Gray Gray */
             --card-bg: #FFFFFF;
-            --border-color: #E2D5C3;
-            --text-main: #2C1D18;
-            --text-light: #6E5E58;
-            --success: #10B981;
+            --border-color: #E2E8F0;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
             --danger: #EF4444;
+            --success: #10B981;
             --font-bn: 'Anek Bangla', sans-serif;
-            --font-en: 'Poppins', sans-serif;
-            --shadow-soft: 0 10px 25px rgba(35, 22, 18, 0.08);
-            --shadow-card: 0 4px 15px rgba(166, 75, 42, 0.07);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: var(--font-bn), var(--font-en), sans-serif;
-            background-color: var(--sand-bg);
-            background-image: radial-gradient(rgba(166, 75, 42, 0.05) 1px, transparent 1px), radial-gradient(rgba(35, 22, 18, 0.04) 1px, var(--sand-bg) 1px);
-            background-size: 20px 20px;
-            color: var(--text-main);
+            font-family: var(--font-bn), sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -43,37 +39,41 @@
 
         /* Top Header Navigation */
         .account-header {
-            background-color: var(--clay-dark);
-            padding: 14px 20px;
+            background-color: #FFFFFF;
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow-sm);
         }
 
-        .account-header .logo img { height: 45px; width: auto; }
+        .account-header .logo img { height: 42px; width: auto; }
 
         .back-home-btn {
-            color: #FFF;
+            color: var(--text-dark);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 6px;
-            background-color: rgba(255,255,255,0.1);
-            padding: 8px 14px;
+            background-color: #F1F5F9;
+            padding: 8px 16px;
             border-radius: 20px;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
-        .back-home-btn:hover { background-color: var(--terracotta); }
+        .back-home-btn:hover { 
+            background-color: var(--primary); 
+            color: #FFFFFF;
+        }
 
-        /* Main Wrapper Container */
+        /* Main Container */
         .main-container {
             flex: 1;
-            max-width: 650px;
+            max-width: 520px;
             width: 100%;
-            margin: 30px auto;
+            margin: 40px auto;
             padding: 0 16px;
         }
 
@@ -81,20 +81,20 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            box-shadow: var(--shadow-soft);
+            box-shadow: var(--shadow-md);
             overflow: hidden;
-            animation: fadeIn 0.4s ease;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* Tab Bar */
         .tab-bar {
             display: flex;
-            background-color: #EDE5D8;
+            background-color: #F8FAFC;
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -105,27 +105,27 @@
             background: transparent;
             font-size: 1.05rem;
             font-weight: 700;
-            color: var(--text-light);
+            color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all 0.2s;
             font-family: inherit;
         }
 
         .tab-btn.active {
             background-color: var(--card-bg);
-            color: var(--terracotta);
-            border-bottom: 3px solid var(--terracotta);
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
         }
 
-        .form-section { padding: 30px 24px; display: none; }
+        .form-section { padding: 32px 28px; display: none; }
         .form-section.active { display: block; }
 
         .form-title {
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            color: var(--clay-dark);
-            margin-bottom: 20px;
+            color: var(--text-dark);
+            margin-bottom: 24px;
         }
 
         .form-group { margin-bottom: 18px; position: relative; }
@@ -134,149 +134,138 @@
             font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 6px;
-            color: var(--clay-dark);
+            color: var(--text-dark);
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
             padding: 12px 14px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 0.95rem;
             font-family: inherit;
-            background-color: #FAF8F5;
-            color: var(--text-main);
-            transition: border-color 0.2s;
+            background-color: #FFFFFF;
+            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
-            border-color: var(--terracotta);
-            background-color: #FFF;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(166, 75, 42, 0.12);
         }
 
         .toggle-password {
             position: absolute;
-            right: 12px;
-            top: 37px;
+            right: 14px;
+            top: 38px;
             cursor: pointer;
-            color: var(--text-light);
+            color: var(--text-muted);
+            user-select: none;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 14px;
-            background-color: var(--terracotta);
-            color: #FFF;
+            padding: 13px;
+            background-color: var(--primary);
+            color: #FFFFFF;
             border: none;
-            border-radius: 8px;
-            font-size: 1.05rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s ease;
             font-family: inherit;
+            margin-top: 10px;
         }
-        .btn-submit:hover { background-color: var(--clay-ochre); }
+        .btn-submit:hover { background-color: var(--primary-hover); }
 
         /* Dashboard Styles */
-        .dashboard-container { display: none; animation: fadeIn 0.4s ease; }
+        .dashboard-container { display: none; animation: fadeIn 0.3s ease-in-out; }
 
         .profile-banner {
-            background: linear-gradient(135deg, var(--clay-dark) 0%, #422920 100%);
-            color: #FFF;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 24px;
             display: flex;
             align-items: center;
             gap: 20px;
-            box-shadow: var(--shadow-card);
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-banner::after {
-            content: '';
-            position: absolute;
-            right: -20px; bottom: -20px;
-            width: 100px; height: 100px;
-            background: rgba(166, 75, 42, 0.2);
-            border-radius: 50%;
-            pointer-events: none;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
         }
 
         .avatar-circle {
-            width: 75px; height: 75px;
+            width: 65px; height: 65px;
             border-radius: 50%;
-            background-color: var(--terracotta);
+            background-color: var(--primary);
             color: #FFF;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid rgba(255,255,255,0.2);
             flex-shrink: 0;
         }
 
-        .user-details h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: 2px; }
-        .user-details p { font-size: 0.88rem; color: #D1C5C0; }
+        .user-details h2 { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+        .user-details p { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
 
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 18px;
         }
 
         .dash-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: var(--shadow-card);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: var(--shadow-sm);
         }
 
         .dash-card-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            color: var(--clay-dark);
+            color: var(--text-dark);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
+            padding-bottom: 12px;
         }
 
-        .dash-card-title svg { width: 22px; height: 22px; stroke: var(--terracotta); }
+        .dash-card-title svg { width: 20px; height: 20px; stroke: var(--primary); }
 
-        .action-links { display: grid; gap: 12px; }
+        .action-links { display: grid; gap: 10px; }
 
         .dash-link-btn {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 16px;
-            background-color: #FAF8F5;
+            padding: 12px 16px;
+            background-color: #F8FAFC;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
-            color: var(--clay-dark);
+            color: var(--text-dark);
             font-weight: 600;
             transition: all 0.2s;
         }
 
         .dash-link-btn:hover {
-            background-color: var(--terracotta);
+            background-color: var(--primary);
             color: #FFF;
-            border-color: var(--terracotta);
+            border-color: var(--primary);
         }
 
         .btn-logout {
-            background-color: rgba(239, 68, 68, 0.1);
+            background-color: #FEF2F2;
             color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            margin-top: 10px;
+            border: 1px solid #FEE2E2;
+            margin-top: 6px;
             cursor: pointer;
             width: 100%;
             font-family: inherit;
@@ -284,32 +273,33 @@
         .btn-logout:hover {
             background-color: var(--danger);
             color: #FFF;
+            border-color: var(--danger);
         }
 
-        /* Toast Message System */
+        /* Toast Notifications */
         #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; }
         .toast {
             padding: 12px 20px;
-            border-radius: 8px;
-            background-color: var(--clay-dark);
+            border-radius: 10px;
+            background-color: #0F172A;
             color: #FFF;
             font-size: 0.9rem;
             margin-bottom: 8px;
             opacity: 0;
             transform: translateX(100%);
             transition: all 0.3s ease;
-            border-left: 4px solid var(--terracotta);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow-md);
         }
         .toast.show { opacity: 1; transform: translateX(0); }
 
         .loader {
             display: inline-block;
-            width: 18px; height: 18px;
-            border: 3px solid rgba(255,255,255,.3);
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,.3);
             border-radius: 50%;
             border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
@@ -341,8 +331,8 @@
                 <h2 class="form-title">আপনার অ্যাকাউন্টে লগইন করুন</h2>
                 <form id="login-form">
                     <div class="form-group">
-                        <label for="login-email">ইমেইল এড্রেস</label>
-                        <input type="email" id="login-email" placeholder="example@mail.com" required>
+                        <label for="login-phone">মোবাইল নম্বর</label>
+                        <input type="tel" id="login-phone" placeholder="017XXXXXXXX" required pattern="[0-9]{11}">
                     </div>
                     <div class="form-group">
                         <label for="login-password">পাসওয়ার্ড</label>
@@ -350,7 +340,7 @@
                         <span class="toggle-password" id="toggle-login-pass">👁️</span>
                     </div>
                     <div style="text-align: right; margin-bottom: 15px;">
-                        <a href="#" id="forgot-pass-btn" style="color: var(--terracotta); font-size: 0.85rem; text-decoration: none; font-weight: 600;">পাসওয়ার্ড ভুলে গেছেন?</a>
+                        <a href="https://wa.me/8801721393555?text=আমি%20পাসওয়ার্ড%20ভুলে%20গেছি,%20সাহায্য%20চাই।" target="_blank" style="color: var(--primary); font-size: 0.85rem; text-decoration: none; font-weight: 600;">পাসওয়ার্ড ভুলে গেছেন?</a>
                     </div>
                     <button type="submit" class="btn-submit" id="login-submit-btn">লগইন করুন</button>
                 </form>
@@ -365,12 +355,12 @@
                         <input type="text" id="reg-name" placeholder="যেমন: আব্দুর রহমান" required>
                     </div>
                     <div class="form-group">
-                        <label for="reg-phone">মোবাইল নম্বর</label>
-                        <input type="tel" id="reg-phone" placeholder="017XXXXXXXX" required>
+                        <label for="reg-phone">মোবাইল নম্বর (লগইন আইডি)</label>
+                        <input type="tel" id="reg-phone" placeholder="017XXXXXXXX" required pattern="[0-9]{11}">
                     </div>
                     <div class="form-group">
-                        <label for="reg-email">ইমেইল এড্রেস</label>
-                        <input type="email" id="reg-email" placeholder="example@mail.com" required>
+                        <label for="reg-address">পূর্ণ ঠিকানা (ডেলিভারির জন্য)</label>
+                        <textarea id="reg-address" rows="2" placeholder="গ্রাম/রাস্তা, থানা, জেলা..." required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="reg-password">পাসওয়ার্ড (কমপক্ষে ৬ অক্ষর)</label>
@@ -388,8 +378,7 @@
                 <div id="user-avatar" class="avatar-circle">U</div>
                 <div class="user-details">
                     <h2 id="dash-user-name">ব্যবহারকারী</h2>
-                    <p id="dash-user-email">email@domain.com</p>
-                    <p id="dash-user-phone" style="color: var(--clay-ochre); margin-top: 3px; font-weight: 600;">017XXXXXXXX</p>
+                    <p id="dash-user-phone">017XXXXXXXX</p>
                 </div>
             </div>
 
@@ -407,13 +396,13 @@
                         </div>
                         <div class="form-group">
                             <label>মোবাইল নম্বর</label>
-                            <input type="tel" id="edit-phone" required>
+                            <input type="tel" id="edit-phone" required pattern="[0-9]{11}">
                         </div>
                         <div class="form-group">
-                            <label>স্থায়ী ডেলিভারি ঠিকানা (চেকআউটে অটো-ফিল হবে)</label>
+                            <label>স্থায়ী ডেলিভারি ঠিকানা</label>
                             <textarea id="edit-address" rows="3" placeholder="গ্রাম/রাস্তা, থানা, জেলা..."></textarea>
                         </div>
-                        <button type="submit" class="btn-submit" id="save-profile-btn" style="padding: 10px 18px; font-size: 0.95rem;">তথ্য সংরক্ষণ করুন</button>
+                        <button type="submit" class="btn-submit" id="save-profile-btn" style="padding: 11px 18px; font-size: 0.95rem;">তথ্য সংরক্ষণ করুন</button>
                     </form>
                 </div>
 
@@ -432,10 +421,6 @@
                             <span>💬 কাস্টমার কেয়ার (WhatsApp)</span>
                             <span>→</span>
                         </a>
-                        <button id="reset-password-btn" class="dash-link-btn" style="cursor: pointer; text-align: left; background: #FAF8F5;">
-                            <span>🔒 পাসওয়ার্ড রিসেট ইমেইল পাঠান</span>
-                            <span>→</span>
-                        </button>
                         <button id="logout-btn" class="dash-link-btn btn-logout">
                             <span>🚪 অ্যাকাউন্ট থেকে লগ আউট</span>
                             <span>➔</span>
@@ -456,8 +441,7 @@
             signInWithEmailAndPassword, 
             onAuthStateChanged, 
             signOut, 
-            updateProfile,
-            sendPasswordResetEmail
+            updateProfile
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { 
             getDatabase, 
@@ -483,6 +467,9 @@
 
         const authWrapper = document.getElementById('auth-wrapper');
         const dashboardWrapper = document.getElementById('dashboard-wrapper');
+
+        // Helper: Convert Mobile Number to System Email for Firebase Auth
+        const phoneToEmail = (phone) => `${phone.trim()}@mirtshilpo.local`;
 
         // Toast Notification System
         const showToast = (message, isError = false) => {
@@ -520,7 +507,7 @@
             loginSection.classList.remove('active');
         });
 
-        // Toggle Password visibility
+        // Toggle Password Visibility
         document.getElementById('toggle-login-pass').addEventListener('click', function() {
             const passInput = document.getElementById('login-password');
             const isPass = passInput.type === 'password';
@@ -534,18 +521,16 @@
                 authWrapper.style.display = 'none';
                 dashboardWrapper.style.display = 'block';
 
-                // Set default info from Auth Profile
                 const name = user.displayName || 'ব্যবহারকারী';
                 document.getElementById('dash-user-name').textContent = name;
-                document.getElementById('dash-user-email').textContent = user.email;
                 document.getElementById('user-avatar').textContent = name.charAt(0).toUpperCase();
 
-                // Fetch Database Extended User Data
+                // Fetch database info
                 try {
                     const userSnap = await get(ref(db, `users/${user.uid}`));
                     if (userSnap.exists()) {
                         const data = userSnap.val();
-                        document.getElementById('dash-user-phone').textContent = data.phone || 'মোবাইল নম্বর যুক্ত নেই';
+                        document.getElementById('dash-user-phone').textContent = data.phone || '';
                         document.getElementById('edit-name').value = data.name || name;
                         document.getElementById('edit-phone').value = data.phone || '';
                         document.getElementById('edit-address').value = data.address || '';
@@ -561,7 +546,7 @@
             }
         });
 
-        // Registration Logic
+        // Registration Logic (No Email Required)
         document.getElementById('register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('reg-submit-btn');
@@ -570,25 +555,27 @@
 
             const name = document.getElementById('reg-name').value.trim();
             const phone = document.getElementById('reg-phone').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
+            const address = document.getElementById('reg-address').value.trim();
             const password = document.getElementById('reg-password').value;
 
+            const internalEmail = phoneToEmail(phone);
+
             try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, internalEmail, password);
                 const user = userCredential.user;
 
                 await updateProfile(user, { displayName: name });
                 await set(ref(db, `users/${user.uid}`), {
                     name: name,
                     phone: phone,
-                    email: email,
+                    address: address,
                     createdAt: new Date().toISOString()
                 });
 
                 showToast('অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!');
             } catch (error) {
                 let msg = 'রেজিস্ট্রেশন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।';
-                if (error.code === 'auth/email-already-in-use') msg = 'এই ইমেইল দিয়ে ইতোমধ্যে অ্যাকাউন্ট আছে!';
+                if (error.code === 'auth/email-already-in-use') msg = 'এই মোবাইল নম্বর দিয়ে ইতোমধ্যে অ্যাকাউন্ট আছে!';
                 showToast(msg, true);
             } finally {
                 btn.innerHTML = 'রেজিস্টার সম্পন্ন করুন';
@@ -603,21 +590,22 @@
             btn.innerHTML = '<span class="loader"></span> লগইন হচ্ছে...';
             btn.disabled = true;
 
-            const email = document.getElementById('login-email').value.trim();
+            const phone = document.getElementById('login-phone').value.trim();
             const password = document.getElementById('login-password').value;
+            const internalEmail = phoneToEmail(phone);
 
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                await signInWithEmailAndPassword(auth, internalEmail, password);
                 showToast('সফলভাবে লগইন হয়েছে!');
             } catch (error) {
-                showToast('আপনার ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!', true);
+                showToast('মোবাইল নম্বর অথবা পাসওয়ার্ড সঠিক নয়!', true);
             } finally {
                 btn.innerHTML = 'লগইন করুন';
                 btn.disabled = false;
             }
         });
 
-        // Save/Update Profile Logic
+        // Update Profile Logic
         document.getElementById('update-profile-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = auth.currentUser;
@@ -652,27 +640,6 @@
                 btn.disabled = false;
             }
         });
-
-        // Forgot & Reset Password
-        const handleResetPassword = async () => {
-            const user = auth.currentUser;
-            const email = user ? user.email : prompt("আপনার ইমেইল এড্রেস লিখুন:");
-            if (!email) return;
-
-            try {
-                await sendPasswordResetEmail(auth, email);
-                showToast(`পাসওয়ার্ড রিসেট লিংক ${email} এ পাঠানো হয়েছে!`);
-            } catch (err) {
-                showToast('পাসওয়ার্ড রিসেট ইমেইল পাঠাতে ব্যর্থ হয়েছে।', true);
-            }
-        };
-
-        document.getElementById('forgot-pass-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            handleResetPassword();
-        });
-
-        document.getElementById('reset-password-btn').addEventListener('click', handleResetPassword);
 
         // Logout Logic
         document.getElementById('logout-btn').addEventListener('click', async () => {
